@@ -158,31 +158,31 @@ angular.module('starter.controllers', [])
   .controller('MatchesCtrl', function($scope) {
     $scope.matches = [
       {
-        name: 'ben',
+        name: 'Betsy',
         isNew: true
       },
       {
-        name: 'mike',
+        name: 'Maria',
         isNew: true
       },
       {
-        name: 'perry',
+        name: 'Patty',
         isNew: false
       },
       {
-        name: 'max',
+        name: 'Max',
         isNew: false
       },
       {
-        name: 'ben',
+        name: 'Beatrice',
         isNew: false
       },
       {
-        name: 'mike',
+        name: 'Michelle',
         isNew: false
       },
       {
-        name: 'perry',
+        name: 'Penelope',
         isNew: false
       }
     ]

@@ -24,7 +24,8 @@
       
       <ion-scroll direction="x" class="scroll-horizontal wrapper-xs">
         <div class="text-center scroll-item m-r-sm pos-rlt" ng-repeat="p in matches track by $index" nav-direction="forward" ui-sref="home.messaging({id: $index})">
-          <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded">
+          <img ng-src="video/giphy{{matches.indexOf(p)}}.gif" alt="" class="thumb-md rounded">
+          <!-- <img ng-src="img/{{p.name}}.gif" alt="" class="thumb-md rounded"> -->
           <div class="font-bold">{{p.name}}</div>
           <span class="dot-notification on-avatar" ng-show="p.isNew"></span>
         </div>
@@ -35,7 +36,8 @@
       <div class="wrapper font-bold text-u-c assertive">Messages</div>
       <div>
         <div class="clear m-b-sm" ng-repeat="p in matches track by $index" nav-direction="forward" ui-sref="home.messaging({id: 2})">
-          <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded pull-left m-l m-r-md">
+          <img ng-src="video/giphy{{matches.indexOf(p)}}.gif" alt="" class="thumb-md rounded pull-left m-l m-r-md">
+          <!-- <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded pull-left m-l m-r-md"> -->
           <div class="text-lg b-b b-light clear padder-v">
             <div class="text-c">{{p.name}}</div>
             <p class="text-muted">Sent you a GIPHY</p>
