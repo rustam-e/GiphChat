@@ -7,8 +7,8 @@
 
   <ion-nav-title>
     <div class="thumb-xs rounded">
-      <img src="img/max.png" class="thumb-xs rounded" alt="">
-      Max
+      <img src="video/giphy1.gif" class="thumb-xs rounded" alt="">
+      Maria
     </div>
   </ion-nav-title>
 
@@ -20,10 +20,10 @@
 
   <ion-content delegate-handle="userMessageScroll">
     <div class="wrapper text-center m-t-md" ng-if="isNew">
-      <div class="text-lg">You matched with <span class="font-bold">Max</span> </div>
+      <div class="text-lg">You matched with <span class="font-bold">Maria</span> </div>
       <div class="m-b-md">2 hours ago</div>
       <div class="thumb-xxl rounded">
-        <img src="img/ben.png" class="thumb-xxl rounded" alt="">
+        <img src="video/giphy1.gif" class="thumb-xxl rounded" alt="">
       </div>
       <div class="text-lg font-thin">Which photo is your favorite?</div>
     </div>
@@ -34,7 +34,8 @@
         <div class="timestamp" ng-repeat-start="item in messages">{{item.timestamp}}</div>
 
         <div class="item item-avatar b-none" ng-class="item.isMe?'me':'friend'" href="#" ng-repeat-end>
-          <img ng-src="{{item.avatar}}" ng-if="!item.isMe">
+          <!-- <img ng-src="{{item.avatar}}" ng-if="!item.isMe">-->
+          <img ng-src="video/giphy1.gif" ng-if="!item.isMe">
           <div class="bubble" ng-class="{'bubble-image': item.type == 'image'}">
             <i class="icon-tail"></i>
             <span class="content" ng-if="item.type !== 'image'" ng-bind-html="item.body | nl2br"></span>

@@ -27,7 +27,7 @@ angular.module('starter.directives', [])
             '</div>',
       controller: function($scope, $cordovaCamera) {
         var options;
-        $scope.imgSrc = 'img/ben.png';
+        $scope.imgSrc = 'video/giphy0.gif';
 
         document.addEventListener("deviceready", function () {
           options = {
