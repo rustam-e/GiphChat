@@ -50,28 +50,28 @@ angular.module('starter.controllers', [])
     // giphchat cards
     var cards = [
       {
-        image: 'img/adam.jpg'
+        image: "video/giphy1.gif" 
       },
       {
-        image: 'img/ben.png'
+        image: "video/giphy2.gif" 
       },
       {
-        image: 'img/max.png'
+        image: "video/giphy3.gif" 
       },
       {
-        image: 'img/mike.png'
+        image: "video/giphy4.gif" 
       },
       {
-        image: 'img/perry.png'
+        image: "video/giphy5.gif" 
       },
       {
-        image: 'img/ben.png'
+        image: "video/giphy2.gif" 
       },
       {
-        image: 'img/max.png'
+        image: "video/giphy3.gif" 
       },
       {
-        image: 'img/mike.png'
+        image: "video/giphy4.gif" 
       }
     ];
     var resetCards = angular.copy(cards);

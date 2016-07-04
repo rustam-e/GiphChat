@@ -43,7 +43,14 @@
           class="card-{{$index}}"
           ng-style="{'z-index': cards.length - $index + 1}"><!-- Work around for The z-index missing issue-->
           <div class="card-giphchat bg-white" vertical layout ng-click="openProfileModal(true)">
-            <div flex class="div-img" ng-style="{'background-image': 'url(\'' + card.image + '\')'}"></div>  
+          <!--  <div flex class="div-img" ng-style="{'background-image': 'url(\'' + card.image + '\')'}"></div>   -->
+
+            <div class="video-container"style="height: 420px; width: 343px">
+             <img ng-src="{{card.image}}" class ="div-img" style="max-width:100%; max-height: 420px"></img>
+            </div>
+
+
+
             <div class="row caption text-lg l-h">
               <div class="col-80 text-left">
                 <div class="text-xl">Hieu Pham, 28</div>
