@@ -1,0 +1,72 @@
+/* 
+  Chat bubble v0.5
+ */
+
+$lightColor: #eeeeee
+$darkColor: #2cb3c9
+$tailSize: 10px
+
+.chat-bubble
+  .bubble
+    position: relative
+    margin-bottom: 8px
+    padding: 0
+    .content
+      display: inline-block
+      background: $darkColor
+      border-radius: 20px
+      padding: 10px
+      font-size: 15px
+      color: white
+      white-space: normal
+      max-width: 100%
+      text-align: left
+      &.photo
+        padding: 0
+    .icon-tail
+      position: absolute
+      top: 0
+      left: 0
+      width: 0
+      height: 0
+      border: $tailSize solid $darkColor
+    img
+      border-radius: 20px
+      width: 180px
+    &.bubble-image
+      .icon-tail
+        display: none
+    .heart
+      position: absolute
+      right: 0px
+      bottom: 16px
+  .message-status
+    font-size: 12px
+    color: $lightColor
+
+  .me
+    text-align: right
+    .bubble
+      .icon-tail
+        left: inherit
+        top: inherit
+        bottom: 5px
+        right: -8px
+        border-bottom: $tailSize solid $darkColor
+        border-right: $tailSize solid transparent
+        border-top: $tailSize solid transparent
+        border-bottom-right-radius: 6px
+  .friend
+    .bubble .content
+      background: $lightColor
+      color: #444
+    .bubble
+      .icon-tail
+        top: inherit
+        bottom: 5px
+        left: -8px
+        border-bottom: $tailSize solid $lightColor
+        border-right: $tailSize solid $lightColor
+        border-top: $tailSize solid transparent
+        border-left: $tailSize solid transparent
+        border-bottom-left-radius: 6px

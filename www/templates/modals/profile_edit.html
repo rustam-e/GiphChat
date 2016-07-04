@@ -1,0 +1,81 @@
+<ion-modal-view class="bg-muted">
+  <ion-header-bar>
+    <h1 class="title">Edit Info</h1>
+    <button class="button button-clear button-assertive" ng-click="closeEditProfileModal()">Done</button>
+  </ion-header-bar>
+
+  <ion-content class="profile">
+    <div class="photos">
+      <div class="row">
+        <div class="col col-66">
+          <div photo-pickable number="1" img-src="photo1"></div>
+        </div>
+        <div class="col col-33">
+          <div photo-pickable class="m-b-xs" number="2" img-src="photo2"></div>
+          <div photo-pickable number="3" img-src="photo3"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33">
+          <div photo-pickable number="6" img-src="photo6"></div>
+        </div>
+        <div class="col col-33">
+          <div photo-pickable number="5" img-src="photo5"></div>
+        </div>
+        <div class="col col-33">
+          <div photo-pickable number="4" img-src="photo4"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none">About Hieu</div>
+      <div class="item">
+        Funny. Friendly. UI/UX lover.
+        <div class="text-right text-muted">489</div>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none">Current Work</div>
+      <div class="item">
+        Add Work
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none">School</div>
+      <div class="item">
+        Add School
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none">Show My Instagram Photos</div>
+      <div class="item assertive">
+        Connect Instagram
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none">Gender</div>
+      <div class="item">
+        Male
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

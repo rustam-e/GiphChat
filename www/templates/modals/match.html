@@ -1,0 +1,38 @@
+<ion-modal-view class="bg-match color-white">
+  <ion-content class="text-center" scroll="false" vertical layout justified>
+    <div class="wrapper">
+      <div class="wrapper-xs m-t-xl">
+        <span class="text-3x">It's a Match!</span>
+      </div>
+      
+      <div class="wrapper">You and Amanda have liked each other.</div>
+
+      <div class="thumb-xl rounded m-r">
+        <img src="img/ben.png" class="thumb-xl rounded b b-white b-3x" alt="">
+      </div>
+
+      <div class="thumb-xl rounded">
+        <img src="img/max.png" class="thumb-xl rounded b b-white b-3x" alt="">
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <div class="wrapper">
+        <button class="button button-block button-outline" ng-click="closeMatchModal()">
+          <i class="icon ion-chatbubbles"></i>
+          Send Message
+        </button>  
+        
+        <button class="button button-block button-outline" ng-click="closeMatchModal()">
+          <i class="icon ion-ios-browsers"></i>
+          Keep Playing
+        </button>
+      </div>
+
+      <button class="button button-block button-clear m-t-lg" ng-click="closeMatchModal()">
+        <i class="icon ion-ios-upload-outline"></i>
+        Tell Your Friends
+      </button>
+    </div>
+  </div>
+</ion-modal-view>

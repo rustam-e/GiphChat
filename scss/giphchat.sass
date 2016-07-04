@@ -1,0 +1,288 @@
+
+@import animate_mixin
+
+$giphchatRed: #E45356
+
+.color-red-giphchat
+  color: $giphchatRed
+.bg-red-giphchat
+  background-color: $giphchatRed
+
+/* Explore */
+.card-actions
+  .card-action
+    border-radius: 999em
+    background-color: #F1F2F4
+    padding: 8px
+    &.bigger-button
+      padding: 10px
+      .button
+        width: 60px
+        height: 68px
+  .button
+    width: 50px
+    height: 52px
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05)
+    text-align: center
+    font-size: 50px
+    transition: transform 200ms ease-in 
+    .icon:before
+      font-size: 32px
+    &.zoom
+      transform: scale(1.15)
+      -webkit-transform: scale(1.15)
+  &.on-profile
+    position: fixed
+    bottom: 0
+    width: 100%
+.dot-notification
+  display: block
+  position: absolute
+  width: 12px
+  height: 12px
+  left: -3px
+  top: 10px
+  background-color: $giphchatRed
+  border-radius: 50%
+  border: 2px solid #fff
+  &.on-avatar
+    left: inherit
+    right: -5px
+    top: 27px
+
+
+/* giphchat Cards */
+td-cards
+  display: block
+  position: relative
+
+.td-card
+  height: 100%
+td-card
+  position: absolute
+  left: 16px
+  top: 16px
+  right: 16px
+  bottom: 16px
+  border-radius: 12px
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
+  .image
+    border-radius: 12px 12px 0 0
+  .caption
+    padding: 0 16px 8px
+  .card-giphchat
+    border-radius: 12px
+    position: relative
+    margin: 0
+    overflow: initial
+    height: 100%
+  .div-img
+    border-radius: 12px 12px 0 0
+    background-size: cover
+    background-position: center center
+
+.yes-text, .no-text
+  position: absolute
+  text-align: center
+  opacity: 0
+  z-index: 999
+  letter-spacing: 0.2em
+  .icon
+    font-size: 24px
+.no-text
+  transform: rotate(15deg)
+  top: 54px
+  right: 16px
+.yes-text
+  transform: rotate(-15deg)
+  top: 54px
+  left: 16px
+  
+.fade
+  -webkit-transition: 0.2s opacity linear
+  transition: 0.2s opacity linear
+  opacity: 0
+
+/* giphchat Pulse */
+.load
+  border-radius: 100px
+  position: relative
+  padding: 4px
+  @include animation('pulse 2s linear infinite')
+  img
+    display: block
+  &:after, &:before
+    display: inline-block
+    margin: auto
+    position: absolute
+    left: 4px
+    top: 4px
+    content: ""
+    width: 96px
+    height: 96px
+    border-radius: 100px
+    background-color: #fdc4c2
+    border: 2px solid #ff8289
+  &:after
+    z-index: -100
+    @include animation('outer-ripple 2s linear infinite')
+  &:before
+    z-index: -200
+    @include animation('inner-ripple 2s linear infinite')
+
+@include keyframes(pulse)
+  0%
+    transform: scale(0.8)
+    -webkit-transform: scale(0.8)
+    filter: alpha(opacity = 50)
+    opacity: 0.5
+
+  10%
+    transform: scale(1.1)
+    -webkit-transform: scale(1.1)
+    filter: alpha(opacity = 1)
+    opacity: 1
+
+  20%
+    transform: scale(0.9)
+    -webkit-transform: scale(0.9)
+    filter: alpha(opacity = 1)
+    opacity: 1
+
+  100%
+    transform: scale(0.8)
+    -webkit-transform: scale(0.8)
+    filter: alpha(opacity = 50)
+    opacity: 0.5
+
+/* outer ripple */
+
+@include keyframes(outer-ripple)
+  0%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+    filter: alpha(opacity = 50)
+    opacity: 0.5
+
+  80%
+    transform: scale(4.5)
+    -webkit-transform: scale(4.5)
+    filter: alpha(opacity = 0)
+    opacity: 0
+
+  100%
+    transform: scale(4.5)
+    -webkit-transform: scale(4.5)
+    filter: alpha(opacity = 0)
+    opacity: 0
+
+/* inner ripple */
+
+@include keyframes(inner-ripple)
+  0%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+    filter: alpha(opacity = 50)
+    opacity: 0.5
+
+  30%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+    filter: alpha(opacity = 50)
+    opacity: 0.5
+
+  100%
+    transform: scale(3.5)
+    -webkit-transform: scale(3.5)
+    filter: alpha(opacity = 0)
+    opacity: 0
+
+/* SETTINGS */
+.thumb-xxl
+  width: 160px
+  display: inline-block
+.button-edit
+  padding: 6px 8px
+  position: absolute
+  top: 50%
+  right: 50%
+  margin-right: -80px
+  margin-top: 40px
+
+.m-l-extra
+  margin-left: 54px
+.bar-no-border
+  border: none
+  background-image: none !important
+/* end of SETTINGS */
+
+/* MATCHES */
+.scroll-horizontal
+  white-space: nowrap
+  // overflow-x: scroll
+  // overflow-y: hidden
+  .scroll-item
+    display: inline-block
+    float: static
+
+.rounded-matches
+  min-width: 20px
+  display: inline-block
+/* end of MATCHES */
+
+/* PROFILE */
+.profile .scroll
+  padding-bottom: 100px
+.header-bar-transparent
+  position: absolute
+  top: 0
+  height: 54px
+  z-index: 10
+  padding: 8px
+  width: 100%
+  button
+    padding: 3px 14px
+    background-color: rgba(0,0,0,.5)
+    color: white
+    font-weight: bold
+    border: none
+    border-radius: 999em
+.profile-slide
+  height: 330px
+  .image
+    background-position: center center
+    background-size: cover
+    height: 100%
+.slider-pager .slider-pager-page
+  color: #aaa
+  opacity: 1
+  width: 10px
+  &.active
+    color: $giphchatRed
+  .icon.ion-record
+    font-size: 10px
+.instagram-gallery
+  .slider-pager
+    bottom: inherit
+    text-align: right
+    top: 0px
+.photo-pickable
+  position: relative
+  .photo-number
+    position: absolute
+    top: 5px
+    left: 5px
+  .photo-button
+    position: absolute
+    bottom: -5px
+    right: -5px
+    padding: 2px 4px
+
+/* end of PROFILE */
+
+/* MATCH */
+.bg-match
+  background-position: center center
+  background-size: cover
+  background-image: url('../img/bg_match.png')
+/* end of MATCH */

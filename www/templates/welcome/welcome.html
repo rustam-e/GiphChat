@@ -1,0 +1,18 @@
+<ion-view>
+  <div class="wrapper" fit vertical layout justified>
+    <ion-slide-box on-slide-changed="slideHasChanged($index)" active-slide="activeIndex" ng-init="activeIndex = 0" class="m-t">
+      <ion-slide class="text-center flex-vertical-center" ng-repeat="i in [1,2,3]">
+        <img class="w-full" ng-src="img/intro_{{i}}.jpg" alt="">
+      </ion-slide>
+    </ion-slide-box>  
+
+    <div class="text-center text-muted">
+      By continuing, you agree to our <span class="font-bold">Terms of Service</span> and <span class="font-bold">Privacy Policy</span>
+      <button class="button button-block button-positive" ng-click="login()">Log In with Facebook</button>
+      <div>
+        <i class="icon ion-information-circled"></i>
+        We don't post anything to Facebook.
+      </div>
+    </div>
+  </div>
+</ion-view>

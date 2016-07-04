@@ -1,0 +1,14 @@
+{
+  "name": "giphchat-ui",
+  "app_id": "548a574d",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "scss/*.scss",
+    "scss/*.sass"
+  ]
+}

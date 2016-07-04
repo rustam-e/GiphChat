@@ -1,0 +1,47 @@
+<ion-view title="giphchat">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" nav-direction="back" ui-sref="home.explore">
+      <i class="icon ion-fireball"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-title>
+    <button class="button button-clear button-assertive m-t-xs">
+      <i class="icon ion-chatbubbles"></i>
+    </button>
+  </ion-nav-title>
+
+  <div class="bar bar-subheader item-input-inset bar-no-border">
+    <label class="item-input-wrapper">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Search 7 Matches">
+    </label>
+  </div>
+
+  <ion-content class="has-subheader">
+    <div class="b-b b-light wrapper">
+      <div class="m-b-md font-bold text-u-c assertive">New Matches <span class="rounded-matches text-center rounded color-white assertive-bg">2</span></div>
+      
+      <ion-scroll direction="x" class="scroll-horizontal wrapper-xs">
+        <div class="text-center scroll-item m-r-sm pos-rlt" ng-repeat="p in matches track by $index" nav-direction="forward" ui-sref="home.messaging({id: $index})">
+          <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded">
+          <div class="font-bold">{{p.name}}</div>
+          <span class="dot-notification on-avatar" ng-show="p.isNew"></span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="wrapper font-bold text-u-c assertive">Messages</div>
+      <div>
+        <div class="clear m-b-sm" ng-repeat="p in matches track by $index" nav-direction="forward" ui-sref="home.messaging({id: 2})">
+          <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded pull-left m-l m-r-md">
+          <div class="text-lg b-b b-light clear padder-v">
+            <div class="text-c">{{p.name}}</div>
+            <p class="text-muted">Sent you a GIPHY</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,218 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Settings</h1>
+    <button class="button button-clear button-assertive" ng-click="closeSettingsModal()">Done</button>
+  </ion-header-bar>
+  
+  <ion-content>
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item text-center assertive font-bold text-u-c">Get giphchat Plus</div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c">Discovery Settings</div>
+      
+      <div class="item" horizontal layout center>
+        <div class="row no-padder">
+          <div class="col-40">
+            Location
+          </div>
+          <div class="col-60 text-right">
+            My Current Location
+            <div class="text-xs text-muted">Hanoi, Thành phố Hà Nội</div>
+          </div>
+        </div>
+        <span class="item-note m-l">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item b-t">
+        Maximum Distance
+        <span class="item-note">
+          {{distance}}km
+        </span>
+
+        <div class="range range-positive" ng-init="distance = 80">
+          <input type="range" name="volume" min="0" max="100" value="distance" ng-model="distance" class="w-full">
+        </div>
+      </div>
+
+      <div class="item" horizontal layout center>
+        <div class="row no-padder">
+          <div class="col-40">
+            Gender
+          </div>
+          <div class="col-60 text-right text-muted">
+            Only Women
+          </div>
+        </div>
+        <span class="item-note m-l">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item b-t">
+        Age Range
+        <span class="item-note">
+          18-{{age}}
+        </span>
+
+        <div class="range range-positive" ng-init="age = 25">
+          <input type="range" name="volume" min="18" max="60" value="age" ng-model="age" class="w-full">
+        </div>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-toggle">
+        Show me in Discovery
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" checked>
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-divider b-none text-muted item-text-wrap text-xs">
+        While turned off, you will not be shown in the card stack. You can still see and chat with your matches.
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c">Web Profile</div>
+      <div class="item" horizontal layout center>
+        <div class="row no-padder">
+          <div class="col-40">
+            Username
+          </div>
+          <div class="col-60 text-right text-muted">
+            Claim yours
+          </div>
+        </div>
+        <span class="item-note m-l">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+      <div class="item item-divider b-none text-muted item-text-wrap text-xs">
+        Create a public Username. Share your Username. Have people all over the world swipe you on giphchat.
+      </div>
+    </div>
+
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c">Notifications</div>
+      <div class="item item-toggle">
+        New Matches
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" checked>
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle">
+        Message Likes
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" checked>
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle">
+        Messages
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" checked>
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle">
+        Super Likes
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" checked>
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle">
+        In-App Vibrations
+        <label class="toggle toggle-assertive">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c">Contact us</div>
+      <div class="item text-center">
+        Help & Support
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item text-center">
+        Share giphchat
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c">Legal</div>
+      <div class="item">
+        Privacy Policy
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item">
+        Terms of Service
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item">
+        Licenses
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider"></div>
+      <div class="item text-center" ng-click="closeSettingsModal()" ui-sref="welcome">
+        Logout
+      </div>
+
+      <div class="item item-divider text-center">
+        <i class="icon ion-fireball assertive text-3x"></i>
+        <br>
+        Version 5.0.1
+      </div>
+        
+      </div>
+
+      <div class="item item-divider b-none"></div>
+      <div class="item text-center">
+        Delete Account
+      </div>
+      <div class="item item-divider text-center">
+    </div>
+  </ion-content>
+</ion-modal-view>

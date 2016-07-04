@@ -1,0 +1,866 @@
+/* FLEX from Google Polymer 0.5.2 */
+/* CSS Helper ver 1.0.0 */
+html
+  [layout]
+    &[horizontal], &[vertical]
+      display: -ms-flexbox
+      display: -webkit-flex
+
+      display: flex
+    &[horizontal][inline], &[vertical][inline]
+      display: -ms-inline-flexbox
+      display: -webkit-inline-flex
+      display: inline-flex
+    &[horizontal]
+      -ms-flex-direction: row
+      -webkit-flex-direction: row
+      flex-direction: row
+      &[reverse]
+        -ms-flex-direction: row-reverse
+        -webkit-flex-direction: row-reverse
+        flex-direction: row-reverse
+    &[vertical]
+      -ms-flex-direction: column
+      -webkit-flex-direction: column
+      flex-direction: column
+      &[reverse]
+        -ms-flex-direction: column-reverse
+        -webkit-flex-direction: column-reverse
+        flex-direction: column-reverse
+    &[wrap]
+      -ms-flex-wrap: wrap
+      -webkit-flex-wrap: wrap
+      flex-wrap: wrap
+    &[wrap-reverse]
+      -ms-flex-wrap: wrap-reverse
+      -webkit-flex-wrap: wrap-reverse
+      flex-wrap: wrap-reverse
+  [flex]
+    -ms-flex: 1 1 0
+    -webkit-flex: 1
+    flex: 1
+    -webkit-flex-basis: 0
+    flex-basis: 0
+  [vertical][layout]
+    > [flex][auto-vertical], [flex][auto-vertical]
+      -ms-flex: 1 1 auto
+      -webkit-flex-basis: auto
+      flex-basis: auto
+  [flex]
+    &[auto]
+      -ms-flex: 1 1 auto
+      -webkit-flex-basis: auto
+      flex-basis: auto
+    &[none]
+      -ms-flex: none
+      -webkit-flex: none
+      flex: none
+    &[one]
+      -ms-flex: 1
+      -webkit-flex: 1
+      flex: 1
+    &[two]
+      -ms-flex: 2
+      -webkit-flex: 2
+      flex: 2
+    &[three]
+      -ms-flex: 3
+      -webkit-flex: 3
+      flex: 3
+    &[four]
+      -ms-flex: 4
+      -webkit-flex: 4
+      flex: 4
+    &[five]
+      -ms-flex: 5
+      -webkit-flex: 5
+      flex: 5
+    &[six]
+      -ms-flex: 6
+      -webkit-flex: 6
+      flex: 6
+    &[seven]
+      -ms-flex: 7
+      -webkit-flex: 7
+      flex: 7
+    &[eight]
+      -ms-flex: 8
+      -webkit-flex: 8
+      flex: 8
+    &[nine]
+      -ms-flex: 9
+      -webkit-flex: 9
+      flex: 9
+    &[ten]
+      -ms-flex: 10
+      -webkit-flex: 10
+      flex: 10
+    &[eleven]
+      -ms-flex: 11
+      -webkit-flex: 11
+      flex: 11
+    &[twelve]
+      -ms-flex: 12
+      -webkit-flex: 12
+      flex: 12
+  [layout]
+    &[start]
+      -ms-flex-align: start
+      -webkit-align-items: flex-start
+      align-items: flex-start
+    &[center], &[center-center]
+      -ms-flex-align: center
+      -webkit-align-items: center
+      align-items: center
+    &[end]
+      -ms-flex-align: end
+      -webkit-align-items: flex-end
+      align-items: flex-end
+    &[start-justified]
+      -ms-flex-pack: start
+      -webkit-justify-content: flex-start
+      justify-content: flex-start
+    &[center-justified], &[center-center]
+      -ms-flex-pack: center
+      -webkit-justify-content: center
+      justify-content: center
+    &[end-justified]
+      -ms-flex-pack: end
+      -webkit-justify-content: flex-end
+      justify-content: flex-end
+    &[around-justified]
+      -ms-flex-pack: distribute
+      -webkit-justify-content: space-around
+      justify-content: space-around
+    &[justified]
+      -ms-flex-pack: justify
+      -webkit-justify-content: space-between
+      justify-content: space-between
+  [self-start]
+    -ms-align-self: flex-start
+    -webkit-align-self: flex-start
+    align-self: flex-start
+  [self-center]
+    -ms-align-self: center
+    -webkit-align-self: center
+    align-self: center
+  [self-end]
+    -ms-align-self: flex-end
+    -webkit-align-self: flex-end
+    align-self: flex-end
+  [self-stretch]
+    -ms-align-self: stretch
+    -webkit-align-self: stretch
+    align-self: stretch
+  [block]
+    display: block
+  [hidden]
+    display: none!important
+  [relative]
+    position: relative
+  [fit]
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+
+body[fullbleed]
+  margin: 0
+  height: 100vh
+
+html
+  [segment], segment
+    display: block
+    position: relative
+    -webkit-box-sizing: border-box
+    -ms-box-sizing: border-box
+    box-sizing: border-box
+    margin: 1em .5em
+    padding: 1em
+    background-color: #fff
+    -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1)
+    border-radius: 5px
+
+/* end of FLEX from Google Polymer 0.5.2 */
+
+.bg-gd
+  background-image: -webkit-gradient(linear, left 0, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.075)))
+  background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 0, rgba(40, 50, 60, 0.075), 100%)
+  background-image: -moz-linear-gradient(top, rgba(40, 50, 60, 0) 0, rgba(40, 50, 60, 0.075) 100%)
+  background-image: linear-gradient(to bottom, rgba(40, 50, 60, 0) 0, rgba(40, 50, 60, 0.075) 100%)
+  background-repeat: repeat-x
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#1328323c', GradientType=0)
+  filter: none
+
+.bg-gd-dk
+  background-image: -webkit-gradient(linear, left 10%, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.5)))
+  background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 10%, rgba(40, 50, 60, 0.5), 100%)
+  background-image: -moz-linear-gradient(top, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%)
+  background-image: linear-gradient(to bottom, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%)
+  background-repeat: repeat-x
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#7f28323c', GradientType=0)
+  filter: none
+
+.bg-white-opacity
+  background-color: rgba(255, 255, 255, 0.5)
+
+.bg-black-opacity
+  background-color: rgba(32, 43, 54, 0.5)
+
+.pos-rlt
+  position: relative
+
+.pos-stc
+  position: static
+
+.pos-abt
+  position: absolute
+
+.pos-fix
+  position: fixed
+
+.line
+  width: 100%
+  height: 2px
+  margin: 10px 0
+  font-size: 0
+  overflow: hidden
+
+.line-xs
+  margin: 0
+
+.line-lg
+  margin-top: 15px
+  margin-bottom: 15px
+
+.line-dashed
+  border-style: dashed !important
+  background-color: transparent
+  border-width: 0
+
+.no-line
+  border-width: 0
+
+.no-border, .no-borders
+  border-color: transparent
+  border-width: 0
+
+.no-radius
+  border-radius: 0
+
+.block
+  display: block
+  &.hide
+    display: none
+
+.inline
+  display: inline-block !important
+
+.none
+  display: none
+
+.pull-none
+  float: none
+
+.rounded
+  border-radius: 500px
+
+.clear
+  display: block
+  overflow: hidden
+
+.no-bg
+  background-color: transparent
+  color: inherit
+
+.l-h
+  line-height: 1.42857143
+
+.l-h-1x
+  line-height: 1.2
+
+.l-h-2x
+  line-height: 2em
+
+.l-s-1x
+  letter-spacing: 1
+
+.l-s-2x
+  letter-spacing: 2
+
+.l-s-3x
+  letter-spacing: 3
+
+.font-normal
+  font-weight: normal
+
+.font-thin
+  font-weight: 300
+
+.font-bold
+  font-weight: 700
+
+.text-3x
+  font-size: 3em
+
+.text-2x
+  font-size: 2em
+
+.text-lg
+  font-size: 18px
+
+.text-md
+  font-size: 16px
+
+.text-base
+  font-size: 14px
+
+.text-sm
+  font-size: 13px
+
+.text-xs
+  font-size: 12px
+
+.text-xxs
+  text-indent: -9999px
+
+.text-ellipsis
+  display: block
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.text-u-c
+  text-transform: uppercase
+
+.text-l-t
+  text-decoration: line-through
+
+.text-u-l
+  text-decoration: underline
+
+.text-active
+  display: none !important
+
+.active >
+  .text, .auto .text
+    display: none !important
+  .text-active, .auto .text-active
+    display: inline-block !important
+
+.box-shadow
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05)
+
+.box-shadow-lg
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05)
+
+.text-shadow
+  font-size: 170px
+  text-shadow: 0 1px 0 #dee5e7, 0 2px 0 #fcfdfd, 0 5px 10px rgba(0, 0, 0, 0.125), 0 10px 20px rgba(0, 0, 0, 0.2)
+
+.no-shadow
+  -webkit-box-shadow: none !important
+  box-shadow: none !important
+
+.wrapper-xs
+  padding: 5px
+
+.wrapper-sm
+  padding: 10px
+
+.wrapper
+  padding: 15px
+
+.wrapper-md
+  padding: 20px
+
+.wrapper-lg
+  padding: 30px
+
+.wrapper-xl
+  padding: 50px
+
+.padder-lg
+  padding-left: 30px
+  padding-right: 30px
+
+.padder-md
+  padding-left: 20px
+  padding-right: 20px
+
+.padder
+  padding-left: 15px
+  padding-right: 15px
+
+.padder-v
+  padding-top: 15px
+  padding-bottom: 15px
+
+.no-padder
+  padding: 0 !important
+
+.pull-in
+  margin-left: -15px
+  margin-right: -15px
+
+.pull-out
+  margin: -10px -15px
+
+.b
+  border: 1px solid rgba(0, 0, 0, 0.05)
+
+.b-a
+  border: 1px solid #dee5e7
+
+.b-t
+  border-top: 1px solid #dee5e7
+
+.b-r
+  border-right: 1px solid #dee5e7
+
+.b-b
+  border-bottom: 1px solid #dee5e7
+
+.b-l
+  border-left: 1px solid #dee5e7
+
+.b-light
+  border-color: #edf1f2
+
+.b-dark, .b-black
+  border-color: #3a3f51
+
+.b-primary
+  border-color: #7266ba
+
+.b-success
+  border-color: #27c24c
+
+.b-info
+  border-color: #23b7e5
+
+.b-warning
+  border-color: #fad733
+
+.b-danger
+  border-color: #f05050
+
+.b-white
+  border-color: #fff
+
+.b-dashed
+  border-style: dashed !important
+
+.b-l-light
+  border-left-color: #edf1f2
+
+.b-l-dark, .b-l-black
+  border-left-color: #3a3f51
+
+.b-l-primary
+  border-left-color: #7266ba
+
+.b-l-success
+  border-left-color: #27c24c
+
+.b-l-info
+  border-left-color: #23b7e5
+
+.b-l-warning
+  border-left-color: #fad733
+
+.b-l-danger
+  border-left-color: #f05050
+
+.b-l-white
+  border-left-color: #fff
+
+.b-l-2x
+  border-left-width: 2px
+
+.b-l-3x
+  border-left-width: 3px
+
+.b-l-4x
+  border-left-width: 4px
+
+.b-l-5x
+  border-left-width: 5px
+
+.b-2x
+  border-width: 2px
+
+.b-3x
+  border-width: 3px
+
+.b-4x
+  border-width: 4px
+
+.b-5x
+  border-width: 5px
+
+.r
+  border-radius: 2px 2px 2px 2px
+
+.r-2x
+  border-radius: 4px
+
+.r-3x
+  border-radius: 6px
+
+.r-l
+  border-radius: 2px 0 0 2px
+
+.r-r
+  border-radius: 0 2px 2px 0
+
+.r-t
+  border-radius: 2px 2px 0 0
+
+.r-b
+  border-radius: 0 0 2px 2px
+
+.m-xxs
+  margin: 2px 4px
+
+.m-xs
+  margin: 5px
+
+.m-sm
+  margin: 10px
+
+.m
+  margin: 15px
+
+.m-md
+  margin: 20px
+
+.m-lg
+  margin: 30px
+
+.m-xl
+  margin: 50px
+
+.m-n
+  margin: 0 !important
+
+.m-l-none
+  margin-left: 0
+
+.m-l-xs
+  margin-left: 5px
+
+.m-l-sm
+  margin-left: 10px
+
+.m-l
+  margin-left: 15px
+
+.m-l-md
+  margin-left: 20px
+
+.m-l-lg
+  margin-left: 30px
+
+.m-l-xl
+  margin-left: 40px
+
+.m-l-xxl
+  margin-left: 50px
+
+.m-l-n-xxs
+  margin-left: -1px
+
+.m-l-n-xs
+  margin-left: -5px
+
+.m-l-n-sm
+  margin-left: -10px
+
+.m-l-n
+  margin-left: -15px
+
+.m-l-n-md
+  margin-left: -20px
+
+.m-l-n-lg
+  margin-left: -30px
+
+.m-l-n-xl
+  margin-left: -40px
+
+.m-l-n-xxl
+  margin-left: -50px
+
+.m-t-none
+  margin-top: 0
+
+.m-t-xxs
+  margin-top: 1px
+
+.m-t-xs
+  margin-top: 5px
+
+.m-t-sm
+  margin-top: 10px
+
+.m-t
+  margin-top: 15px
+
+.m-t-md
+  margin-top: 20px
+
+.m-t-lg
+  margin-top: 30px
+
+.m-t-xl
+  margin-top: 40px
+
+.m-t-xxl
+  margin-top: 50px
+
+.m-t-n-xxs
+  margin-top: -1px
+
+.m-t-n-xs
+  margin-top: -5px
+
+.m-t-n-sm
+  margin-top: -10px
+
+.m-t-n
+  margin-top: -15px
+
+.m-t-n-md
+  margin-top: -20px
+
+.m-t-n-lg
+  margin-top: -30px
+
+.m-t-n-xl
+  margin-top: -40px
+
+.m-t-n-xxl
+  margin-top: -50px
+
+.m-r-none
+  margin-right: 0
+
+.m-r-xxs
+  margin-right: 1px
+
+.m-r-xs
+  margin-right: 5px
+
+.m-r-sm
+  margin-right: 10px
+
+.m-r
+  margin-right: 15px
+
+.m-r-md
+  margin-right: 20px
+
+.m-r-lg
+  margin-right: 30px
+
+.m-r-xl
+  margin-right: 40px
+
+.m-r-xxl
+  margin-right: 50px
+
+.m-r-n-xxs
+  margin-right: -1px
+
+.m-r-n-xs
+  margin-right: -5px
+
+.m-r-n-sm
+  margin-right: -10px
+
+.m-r-n
+  margin-right: -15px
+
+.m-r-n-md
+  margin-right: -20px
+
+.m-r-n-lg
+  margin-right: -30px
+
+.m-r-n-xl
+  margin-right: -40px
+
+.m-r-n-xxl
+  margin-right: -50px
+
+.m-b-none
+  margin-bottom: 0
+
+.m-b-xxs
+  margin-bottom: 1px
+
+.m-b-xs
+  margin-bottom: 5px
+
+.m-b-sm
+  margin-bottom: 10px
+
+.m-b
+  margin-bottom: 15px
+
+.m-b-md
+  margin-bottom: 20px
+
+.m-b-lg
+  margin-bottom: 30px
+
+.m-b-xl
+  margin-bottom: 40px
+
+.m-b-xxl
+  margin-bottom: 50px
+
+.m-b-n-xxs
+  margin-bottom: -1px
+
+.m-b-n-xs
+  margin-bottom: -5px
+
+.m-b-n-sm
+  margin-bottom: -10px
+
+.m-b-n
+  margin-bottom: -15px
+
+.m-b-n-md
+  margin-bottom: -20px
+
+.m-b-n-lg
+  margin-bottom: -30px
+
+.m-b-n-xl
+  margin-bottom: -40px
+
+.m-b-n-xxl
+  margin-bottom: -50px
+
+.w-xxs
+  width: 60px
+
+.w-xs
+  width: 90px
+
+.w-sm
+  width: 150px
+
+.w
+  width: 200px
+
+.w-md
+  width: 240px
+
+.w-lg
+  width: 280px
+
+.w-xl
+  width: 320px
+
+.w-xxl
+  width: 360px
+
+.w-full
+  width: 100%
+
+.w-auto
+  width: auto
+
+.h-auto
+  height: auto
+
+.h-full
+  height: 100%
+
+.thumb-xl
+  width: 128px
+  display: inline-block
+
+.thumb-lg
+  width: 96px
+  display: inline-block
+
+.thumb-md
+  width: 64px
+  display: inline-block
+
+.thumb
+  width: 50px
+  display: inline-block
+
+.thumb-sm
+  width: 40px
+  display: inline-block
+
+.thumb-xs
+  width: 34px
+  display: inline-block
+
+.thumb-xxs
+  width: 30px
+  display: inline-block
+
+.thumb-wrapper
+  padding: 2px
+  border: 1px solid #dee5e7
+
+.thumb img, .thumb-xs img, .thumb-sm img, .thumb-md img, .thumb-lg img, .thumb-btn img
+  height: auto
+  max-width: 100%
+  vertical-align: middle
+
+.img-full
+  width: 100%
+  img
+    width: 100%
+
+.b-none
+  border: none
+
+.text-center
+  text-align: center
+.text-right
+  text-align: right
+.text-muted
+  color: #9e9e9e
+.bg-white
+  background-color: #fff
+.bg-black
+  background-color: #000
+.bg-muted
+  background-color: #eeeeee
+
+.color-grey-300
+  color: #e0e0e0
+.color-grey-700
+  color: #616161
+.color-grey-900
+  color: #212121
+.color-white
+  color: #fff
+.color-black
+  color: #000
+
+.text-c
+   text-transform: capitalize
+.text-xxs
+  text-indent: 0
+  font-size: 10px
+.text-xl
+  font-size: 22px
+
+.pull-left
+  float: left
+.pull-right
+  float: right

@@ -1,0 +1,81 @@
+<ion-view title="giphchat" class="has-giphy" ng-class="{'show-gif': isGifShown}">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" nav-direction="back" ui-sref="home.matches">
+      <i class="icon ion-arrow-left-c assertive"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-title>
+    <div class="thumb-xs rounded">
+      <img src="img/max.png" class="thumb-xs rounded" alt="">
+      Max
+    </div>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="showUserOptions()">
+      <i class="icon ion-more assertive"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content delegate-handle="userMessageScroll">
+    <div class="wrapper text-center m-t-md" ng-if="isNew">
+      <div class="text-lg">You matched with <span class="font-bold">Max</span> </div>
+      <div class="m-b-md">2 hours ago</div>
+      <div class="thumb-xxl rounded">
+        <img src="img/ben.png" class="thumb-xxl rounded" alt="">
+      </div>
+      <div class="text-lg font-thin">Which photo is your favorite?</div>
+    </div>
+
+    <div class="" ng-if="!isNew">
+      <!-- Chat bubbles -->
+      <div class="list chat-bubble">
+        <div class="timestamp" ng-repeat-start="item in messages">{{item.timestamp}}</div>
+
+        <div class="item item-avatar b-none" ng-class="item.isMe?'me':'friend'" href="#" ng-repeat-end>
+          <img ng-src="{{item.avatar}}" ng-if="!item.isMe">
+          <div class="bubble" ng-class="{'bubble-image': item.type == 'image'}">
+            <i class="icon-tail"></i>
+            <span class="content" ng-if="item.type !== 'image'" ng-bind-html="item.body | nl2br"></span>
+            <img ng-src="{{item.body}}" alt="" ng-if="item.type == 'image'">
+            <i class="icon ion-ios-heart-outline heart text-muted text-2x" ng-if="!item.isMe && item.type == 'image'"></i>
+          </div>
+          <span class="message-status" ng-if="item.isMe">Sent</span>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+
+  <div class="giphy-container" ng-show="isGifShown">
+    <div class="text-center" ng-show="isGifLoading">
+      <ion-spinner icon="ios"></ion-spinner>  
+    </div>
+    <ion-scroll direction="x" class="scroll-horizontal">
+      <div class="text-center scroll-item" ng-repeat="gif in gifs track by $index" ng-click="sendGif(gif.images.fixed_height_small.url)">
+        <img ng-src="{{gif.images.fixed_height_small.url}}" alt="">
+      </div>
+    </ion-scroll>
+  </div>
+
+  <ion-footer-bar class="bar-light item-input-inset" elastic>
+    <div class="footer-btn-wrap">
+      <button type="button" class="button button-calm footer-btn" ng-show="!isGifShown" ng-click="openGiphy()">
+        <span class="font-bold text-xs">GIF</span>
+      </button>
+      <button type="button" class="button button-clear button-assertive footer-btn" ng-show="isGifShown" ng-click="isGifShown = false">
+        <i class="icon ion-close-round"></i>
+      </button>
+    </div>
+    <label class="item-input-wrapper no-bg">
+      <textarea rows="1" msd-elastic placeholder="Message" id="type-area" ng-model="message" ng-show="!isGifShown">
+      </textarea>
+      <input type="search" placeholder="Search a GIF..." id="type-area2" ng-model="gifQuery" ng-model-options="{ debounce: 500 }" ng-show="isGifShown">
+    </label>
+    <div class="footer-btn-wrap">
+      <button type=submit class="button button-clear footer-btn" ng-click="sendText()" ng-disabled="message.length == 0" ng-show="!isGifShown">
+        Send
+      </button>
+    </div>
+  </ion-footer-bar>
+</ion-view>

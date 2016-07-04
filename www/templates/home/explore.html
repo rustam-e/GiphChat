@@ -1,0 +1,91 @@
+<ion-view title="giphchat">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" nav-direction="back" ui-sref="home.settings">
+      <i class="icon ion-person"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" nav-direction="forward" ui-sref="home.matches">
+      <span class="dot-notification"></span>
+      <i class="icon ion-chatbubbles"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-title>
+    <img src="img/logo.png" height="36" alt="" style="vertical-align: middle">
+  </ion-nav-title>
+
+  <ion-content vertical layout scroll="false">
+    <div class="card-container text-center" flex relative vertical layout>
+      <div ng-show="cards.length == 0" vertical layout center flex>
+        <div flex horizontal layout center>
+          <div class="load">
+            <img src="img/adam.jpg" alt="" class="thumb-lg rounded b b-5x b-light box-shadow">
+          </div>
+        </div>
+        <div class="text-muted text-center l-h">
+          There's no one new around you.
+          <br>
+          Use Passport to choose a new location.
+        </div>
+      </div>
+
+      <td-cards fit>
+        <td-card ng-repeat="card in cards" 
+          on-destroy="cardDestroyed($index)" 
+          on-swipe-left="cardSwipedLeft($event, $index)" 
+          on-swipe-right="cardSwipedRight($event, $index)" 
+          on-partial-swipe="cardPartialSwipe(amt)" 
+          on-transition-left="transitionLeft(card)"
+          on-transition-right="transitionRight(card)"
+          on-transition-out="transitionOut(card)"
+          class="card-{{$index}}"
+          ng-style="{'z-index': cards.length - $index + 1}"><!-- Work around for The z-index missing issue-->
+          <div class="card-giphchat bg-white" vertical layout ng-click="openProfileModal(true)">
+            <div flex class="div-img" ng-style="{'background-image': 'url(\'' + card.image + '\')'}"></div>  
+            <div class="row caption text-lg l-h">
+              <div class="col-80 text-left">
+                <div class="text-xl">Hieu Pham, 28</div>
+                <div class="text-muted">The Cafe Lounge</div>
+              </div>
+              <div class="col-20 text-muted text-xl text-right">
+                <i class="icon ion-android-bookmark"></i>
+                3
+              </div>
+            </div>
+            <div class="no-text">
+              <span class="wrapper-xs b b-danger b-5x r-3x assertive font-bold text-3x">NOPE</span>
+            </div>
+            <div class="yes-text">
+              <span class="wrapper-xs b b-success b-5x r-3x balanced font-bold text-3x">LIKE</span>
+            </div>
+          </div>
+        </td-card>
+      </td-cards>
+    </div>
+
+    <div class="card-actions padder-v" horizontal layout around-justified center>
+      <div class="card-action">
+        <button class="button button-light rounded" ng-click="reset()">
+          <i class="icon ion-refresh energized text-2x rounded"></i>
+        </button>
+      </div>
+      <div class="card-action bigger-button">
+        <button class="button button-large button-light rounded" ng-class="{zoom: isMoveLeft}" ng-click="cardDestroyed(0)">
+          <i class="icon ion-close-round text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'assertive'"></i>
+        </button>
+      </div>
+      <div class="card-action bigger-button">
+        <button class="button button-large button-light rounded" ng-class="{zoom: isMoveRight}" ng-click="cardDestroyed(0)">
+          <i class="icon ion-heart text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'balanced'"></i>
+        </button>
+      </div>
+      <div class="card-action">
+        <button class="button button-light rounded">
+          <i class="icon ion-android-star text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'calm'"></i>
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
