@@ -25,7 +25,21 @@
       <div class="thumb-xxl rounded">
         <img src="video/giphy1.gif" class="thumb-xxl rounded" alt="">
       </div>
-      <div class="text-lg font-thin">Which photo is your favorite?</div>
+      <div class="text-lg font-thin">Hurry up! If you don't talk within next 24 hours this match will be deleted!</div>
+
+      <div class="timestamp" ng-init="item = questions[0]">
+   <!-- 2     <div ng-if="questions.indexOf(item) < questions.length" > class="my-hide"-->
+        <div ng-show="questions.indexOf(item) < questions.length && questions.indexOf(item) >= 0">
+          <h4>{{item.question}}</h4>
+          <button class="button button-block button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
+             {{item.option1}}
+          </button>
+          <h5>OR {{questions.indexOf(item)}}</h5>
+          <button class="button button-block button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
+            {{item.option2}}
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="" ng-if="!isNew">

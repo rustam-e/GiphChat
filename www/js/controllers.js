@@ -195,6 +195,23 @@ angular.module('starter.controllers', [])
     $scope.gifQuery = '';
     $scope.isGifShown = false;
     $scope.isGifLoading = false;
+    $scope.questions = [
+      {
+        question: "Usual week-end night?",
+        option1: "Go to the bars",
+        option2: "Read a book at home"
+      },
+      {
+        question: "Which do you like more?",
+        option1: "Tea",
+        option2: "Coffee"
+      },
+      {
+        question: "Favorite Food",
+        option1: "Healthy Food",
+        option2: "Taste before health! You Only live once!"
+      }
+    ];
     $scope.messages = [
       {
         isMe: true,
