@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
       $scope.profileModal.hide();
     };
 
-    $scope.interests = 'We compare your  Facebook friends  with those  of your matches to display  any  common connections'.split('  ');
+    $scope.interests = 'We will compare your Facebook interests  with those  of your matches to display  any  common connections'.split('  ');
     
     /*Edit Profile*/
     $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
@@ -50,27 +50,59 @@ angular.module('starter.controllers', [])
     // giphchat cards
     var cards = [
       {
-        image: "video/giphy1.gif" 
+        name: 'Max',
+        age: 25,
+        location: "San Francisco",
+        stars: 4,
+        image: "video/card1.gif"
       },
       {
+        name: 'Beatrice',
+        age: 40,
+        location: "San Francisco",
+        stars: 4.5,
+        image: "video/card2.gif" 
+      },
+      {
+        name: 'Maria',
+        age: 28,
+        location: "San Francisco",
+        stars: 5,
+        image: "video/card3.gif" 
+      },
+      {
+        name: 'Betsy',
+        age: 31,
+        location: "San Francisco",
+        stars: 3.5,
+        image: "video/card4.gif" 
+      },
+      {
+        name: 'Michelle',
+        age: 22,
+        location: "San Francisco",
+        stars: 4,
+        image: "video/card5.gif" 
+      },
+      {
+        name: 'Penelope',
+        age: 23,
+        location: "San Francisco",
+        stars: 5,
         image: "video/giphy2.gif" 
       },
       {
+        name: 'Penelope',
+        age: 19,
+        location: "San Francisco",
+        stars: 4,
         image: "video/giphy3.gif" 
       },
       {
-        image: "video/giphy4.gif" 
-      },
-      {
-        image: "video/giphy5.gif" 
-      },
-      {
-        image: "video/giphy2.gif" 
-      },
-      {
-        image: "video/giphy3.gif" 
-      },
-      {
+        name: 'Patty',
+        age: 19,
+        location: "San Francisco",
+        stars: 4,
         image: "video/giphy4.gif" 
       }
     ];
@@ -158,7 +190,7 @@ angular.module('starter.controllers', [])
   .controller('MatchesCtrl', function($scope) {
     $scope.matches = [
       {
-        name: 'Betsy',
+        name: 'Beatrice',
         isNew: true
       },
       {
@@ -174,7 +206,7 @@ angular.module('starter.controllers', [])
         isNew: false
       },
       {
-        name: 'Beatrice',
+        name: 'Betsy',
         isNew: false
       },
       {
