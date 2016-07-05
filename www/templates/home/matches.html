@@ -40,7 +40,8 @@
           <!-- <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded pull-left m-l m-r-md"> -->
           <div class="text-lg b-b b-light clear padder-v">
             <div class="text-c">{{p.name}}</div>
-            <p class="text-muted">Sent you a GIPHY</p>
+            <p class="text-muted" ng-if="p.isNew">You just matched!</p>
+            <p class="text-muted" ng-if="!p.isNew">Send you a new message!</p>
           </div>
         </div>
       </div>
