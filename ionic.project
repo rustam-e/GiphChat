@@ -1,5 +1,5 @@
 {
-  "name": "giphchat-ui",
+  "name": "GifChat-ui",
   "app_id": "548a574d",
   "gulpStartupTasks": [
     "sass",

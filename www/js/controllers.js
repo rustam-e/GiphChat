@@ -47,7 +47,7 @@ angular.module('starter.controllers', [])
   })
 
   .controller('ExploreCtrl', function($scope, $ionicModal) {
-    // giphchat cards
+    // GifChat cards
     var cards = [
       {
         name: 'Max',
