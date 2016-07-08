@@ -13,7 +13,7 @@
   </ion-nav-buttons>
 
   <ion-nav-title>
-    <img src="img/logo.png" height="36" alt="" style="vertical-align: middle">
+    <img src="img/logo-bottom.png" height="36" alt="" style="vertical-align: middle">
   </ion-nav-title>
 
   <ion-content vertical layout scroll="false">
@@ -21,11 +21,11 @@
       <div ng-show="cards.length == 0" vertical layout center flex>
         <div flex horizontal layout center>
           <div class="load">
-            <img src="img/adam.jpg" alt="" class="thumb-lg rounded b b-5x b-light box-shadow">
+            <img src="video/giphy-me.gif" alt="" class="thumb-lg rounded b b-5x b-light box-shadow">
           </div>
         </div>
         <div class="text-muted text-center l-h">
-          There's no one new around you.
+          <h5>Please Wait for 4 hours before you can explore more people</h5>
           <br>
         </div>
       </div>
@@ -72,10 +72,10 @@
     </div>
 
     <div class="card-actions padder-v" horizontal layout around-justified center>
-      <div class="card-action"><!--
+      <div class="card-action">
         <button class="button button-light rounded" ng-click="reset()">
           <i class="icon ion-refresh energized text-2x rounded"></i>
-        </button>-->
+        </button>
       </div>
       <div class="card-action bigger-button">
         <button class="button button-large button-light rounded" ng-class="{zoom: isMoveLeft}" ng-click="cardDestroyed(0)">
@@ -87,10 +87,10 @@
           <i class="icon ion-heart text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'balanced'"></i>
         </button>
       </div>
-      <div class="card-action"><!--
+      <div class="card-action">
         <button class="button button-light rounded">
           <i class="icon ion-android-star text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'calm'"></i>
-        </button> -->
+        </button>
       </div>
     </div>
   </ion-content>
