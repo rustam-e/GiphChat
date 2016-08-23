@@ -47,6 +47,8 @@ angular.module('starter.controllers', [])
   })
 
   .controller('ExploreCtrl', function($scope, $ionicModal) {
+    var payOrInviteClicked;
+    $scope.payOrInviteClicked = false;
     // GifChat cards
     var cards = [
       {
@@ -108,6 +110,12 @@ angular.module('starter.controllers', [])
     ];
     var resetCards = angular.copy(cards);
     $scope.cards = [];
+
+    function payOrInviteClick () {
+      console.log("payOrInviteClicked: ");
+      $scope.payOrInviteClicked = true;
+      console.log("payOrInviteClicked: " + $scope.payOrInviteClicked);
+    }
 
     function _addCards(quantity) {
       for (var i = 0; i < Math.min(cards.length, quantity); i++) {

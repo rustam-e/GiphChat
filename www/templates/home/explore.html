@@ -27,6 +27,16 @@
         <div class="text-muted text-center l-h">
           <h5>Please Wait for 4 hours before you can explore more people</h5>
           <br>
+          <button class="button button-block button-positive" ng-click="payOrInviteClick()">I don't want to wait</button>
+          <div ng-show="payOrInviteClicked">
+            <button class="button button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
+               Pay
+            </button>
+            <h5>OR</h5>
+            <button class="button button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
+              Invite Friends
+            </button>
+          </div>
         </div>
       </div>
 
