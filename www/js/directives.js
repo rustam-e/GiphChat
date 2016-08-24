@@ -1,5 +1,5 @@
 // Source: https://www.thepolyglotdeveloper.com/2015/01/making-tinder-style-swipe-cards-ionic-framework/
-angular.module('starter.directives', [])
+angular.module('gifchat.directives', [])
   .directive('noScroll', function() {
     return {
       restrict: 'A',

@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('gifchat.controllers', [])
   .controller('AppCtrl', function($scope, $ionicModal) {
     $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
       scope: $scope,

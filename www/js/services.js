@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('gifchat.services', [])
   /*
     Giphy Service
     Docs: https://github.com/Giphy/GiphyAPI#search-endpoint

@@ -7,6 +7,7 @@
   "dependencies": {
     "ionic-ion-tinder-cards": "ionic-contrib-tinder-cards#*",
     "angular-elastic": "^2.5.1",
-    "ngCordova": "^0.1.26-alpha"
+    "ngCordova": "^0.1.26-alpha",
+    "angularfire": "^2.0.2"
   }
 }
