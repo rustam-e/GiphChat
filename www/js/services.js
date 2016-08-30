@@ -1,8 +1,12 @@
-angular.module('gifchat.services', [])
+angular.module('gifchat.services', ['firebase'])
   /*
     Giphy Service
     Docs: https://github.com/Giphy/GiphyAPI#search-endpoint
   */
+  .service('$firebaseArray', function($firebaseArray){
+    var ref = firebase.database().ref().child('users')
+  })
+
   .service('Giphy', function($http) {
     var API_KEY = 'dc6zaTOxFJmzC'; // Public Beta Key
     var ENDPOINT = 'http://api.giphy.com/v1/gifs/';

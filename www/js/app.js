@@ -29,6 +29,14 @@ angular.module('gifchat', [
       StatusBar.styleDefault();
     }
   });
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDcBzfLGUO5UBFgavFs63p5mu6reWKZGfY",
+    authDomain: "gifchat-a464f.firebaseapp.com",
+    databaseURL: "https://gifchat-a464f.firebaseio.com",
+    storageBucket: "",
+  };
+  firebase.initializeApp(config);
 })
 
 .config(function($ionicConfigProvider) {

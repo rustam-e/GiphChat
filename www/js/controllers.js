@@ -1,4 +1,4 @@
-angular.module('gifchat.controllers', [])
+angular.module('gifchat.controllers', ['firebase'])
   .controller('AppCtrl', function($scope, $ionicModal) {
     $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
       scope: $scope,
@@ -33,8 +33,17 @@ angular.module('gifchat.controllers', [])
     };
   })
 
-  .controller('WelcomeCtrl', function($scope, $state, $ionicLoading, $timeout) {
+  .controller('WelcomeCtrl', function($scope, $state, $ionicLoading, $timeout, $firebaseAuth) {
     $scope.login = function() {
+    var auth = $firebaseAuth();
+    // login with Facebook
+    auth.$signInWithPopup("facebook").then(function(firebaseUser) {
+      var user = firebaseUser.user;
+      console.log("Signed in as:", user.uid);
+
+    }).catch(function(error) {
+      console.log("Authentication failed:", error);
+    });
       $ionicLoading.show({
         template: '<ion-spinner></ion-spinner>'
       });
@@ -43,6 +52,7 @@ angular.module('gifchat.controllers', [])
         $ionicLoading.hide();
         $state.go('home.explore');
       }, 2000);
+
     }
   })
 
