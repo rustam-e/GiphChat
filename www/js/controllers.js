@@ -32,31 +32,30 @@ angular.module('gifchat.controllers', ['firebase'])
       $scope.editProfileModal.hide();
     };
   })
+  .controller('WelcomeCtrl', function(Auth, $state, $scope) {
 
-  .controller('WelcomeCtrl', function($scope, $state, $ionicLoading, $timeout, $firebaseAuth) {
     $scope.login = function() {
-    var auth = $firebaseAuth();
-    // login with Facebook
-    auth.$signInWithPopup("facebook").then(function(firebaseUser) {
-      var user = firebaseUser.user;
-      console.log("Signed in as:", user.uid);
-
-    }).catch(function(error) {
-      console.log("Authentication failed:", error);
-    });
-      $ionicLoading.show({
-        template: '<ion-spinner></ion-spinner>'
-      });
-
-      $timeout(function() {
-        $ionicLoading.hide();
+      console.log('Login cliked');
+      
+      return Auth.login().then(function(user) {
         $state.go('home.explore');
-      }, 2000);
+      });
+      
+    };
 
-    }
+    $scope.logout = function() {
+      Auth.logout();
+    };
   })
+  .controller('ExploreCtrl', function($firebaseArray, $scope, $ionicModal) {
+    var ref = firebase.database().ref();
+    var relationshipsRef = ref.child('relationships');
+    var likesRef = relationshipsRef.child('likes');
+    var dislikesRef = relationshipsRef.child('dislikes');
+    //trying to get current user
+    var user = firebase.auth().currentUser;
+    //console.log(user);
 
-  .controller('ExploreCtrl', function($scope, $ionicModal) {
     var payOrInviteClicked;
     $scope.payOrInviteClicked = false;
     // GifChat cards
@@ -66,6 +65,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 25,
         location: "San Francisco",
         stars: 4,
+        uid: 1,
         image: "video/card1.gif"
       },
       {
@@ -73,6 +73,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 40,
         location: "San Francisco",
         stars: 4.5,
+        uid: 2,
         image: "video/card2.gif" 
       },
       {
@@ -80,6 +81,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 28,
         location: "San Francisco",
         stars: 5,
+        uid: 6,
         image: "video/card3.gif" 
       },
       {
@@ -87,6 +89,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 31,
         location: "San Francisco",
         stars: 3.5,
+        uid: 7,
         image: "video/card4.gif" 
       },
       {
@@ -94,6 +97,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 22,
         location: "San Francisco",
         stars: 4,
+        uid: 8,
         image: "video/card5.gif" 
       },
       {
@@ -101,6 +105,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 23,
         location: "San Francisco",
         stars: 5,
+        uid: 9,
         image: "video/giphy2.gif" 
       },
       {
@@ -108,6 +113,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 19,
         location: "San Francisco",
         stars: 4,
+        uid: 10,
         image: "video/giphy3.gif" 
       },
       {
@@ -115,6 +121,7 @@ angular.module('gifchat.controllers', ['firebase'])
         age: 19,
         location: "San Francisco",
         stars: 4,
+        uid: 11,
         image: "video/giphy4.gif" 
       }
     ];
@@ -150,11 +157,23 @@ angular.module('gifchat.controllers', ['firebase'])
     // https://devdactic.com/optimize-tinder-cards/
     $scope.cardSwipedLeft = function(event, index) {
       console.log($scope.cards[index], 'NOPE');
+      var dislike = {
+        from: user.uid,
+        to: $scope.cards[index].uid
+      };
+      return $firebaseArray(dislikesRef).$add(dislike);
       event.stopPropagation();
     }
 
     $scope.cardSwipedRight = function(event, index) {
       console.log($scope.cards[index], 'LIKE');
+      var like = {
+        from: user.uid,
+        to: $scope.cards[index].uid
+      };
+      return $firebaseArray(likesRef).$add(like);
+
+
       event.stopPropagation();
 
       // Open Match popup
@@ -190,7 +209,8 @@ angular.module('gifchat.controllers', ['firebase'])
     _addCards(2);// 2 is the best choice for the performance
   })
 
-  .controller('SettingsCtrl', function($scope, $ionicModal) {
+  .controller('SettingsCtrl', function(Auth, $scope, $ionicModal) {
+
     $ionicModal.fromTemplateUrl('templates/modals/settings.html', {
       scope: $scope,
       animation: 'slide-in-up'

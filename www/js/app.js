@@ -38,7 +38,6 @@ angular.module('gifchat', [
   };
   firebase.initializeApp(config);
 })
-
 .config(function($ionicConfigProvider) {
   $ionicConfigProvider.navBar.alignTitle('center');
   $ionicConfigProvider.views.swipeBackEnabled(false);
