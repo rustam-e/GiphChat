@@ -242,7 +242,9 @@ angular.module('gifchat.controllers', ['firebase'])
   .controller('SettingsCtrl', function(Auth, $scope, $ionicModal) {
     console.log('Settings Controller initialized');
     $scope.currentUser = Auth.currentUser;
+    console.log($scope.currentUser);
 
+    // setting up settings modal
     $ionicModal.fromTemplateUrl('templates/modals/settings.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -267,6 +269,7 @@ angular.module('gifchat.controllers', ['firebase'])
       console.log('Settings Modal closed');
     };
 
+    // setting up profile_edit modal
     $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
       scope: $scope,
       animation: 'slide-in-up'

@@ -4,20 +4,29 @@
     <button class="button button-clear button-assertive" ng-click="closeEditProfileModal()">Done</button>
   </ion-header-bar>
 
-  <ion-content class="profile">
-    <div class="photos">
-      <div class="row">
-        <div class="col col-66">
+  <ion-content>
+        <ion-scroll direction="x" class="scroll-horizontal">
+          <div class="text-center scroll-item">
+            <img ng-src="{{currentUser.profilePicture}}" alt="">
+          </div>
+          <div class="text-center scroll-item" ng-repeat="image in currentUser.images track by $index" ng-click="sendGif(gif.images.fixed_height_small.url)">
+            <img ng-src="{{image}}" alt="">
+          </div>
+        </ion-scroll> 
         <!--
-          <div photo-pickable number="1" img-src="{{currentUser.photoUrl}}"></div>-->
-          <img src="{{currentUser.photoUrl}}">
-        </div>
+            <div class="photos">
+  
+        <div class="row">
+     
+          <div photo-pickable number="1" img-src="{{currentUser.profilePicture}}"></div>
+
+        </div>-->
         <!--
         <div class="col col-33">
           <div photo-pickable class="m-b-xs" number="2" img-src="photo2"></div>
           <div photo-pickable number="3" img-src="photo3"></div>
-        </div>-->
-      </div> <!--
+        </div>
+      </div>
       <div class="row">
         <div class="col col-33">
           <div photo-pickable number="6" img-src="photo6"></div>
