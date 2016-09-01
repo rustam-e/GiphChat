@@ -59,6 +59,7 @@ angular.module('gifchat.services', ['firebase'])
         invitableFriends: user.invitableFriends,
         friends: user.friends
       };
+      console.log(Auth.currentUser);
       return Auth.currentUser;
     },
 
@@ -176,7 +177,7 @@ angular.module('gifchat.services', ['firebase'])
 
   auth.$onAuthStateChanged(function(user) {
     if(user) {
-      console.log('welcome');
+      console.log(Auth.currentUser.firstName);
 
     } else {
       $state.go('welcome');

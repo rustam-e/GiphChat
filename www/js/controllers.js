@@ -17,19 +17,6 @@ angular.module('gifchat.controllers', ['firebase'])
     };
 
     $scope.interests = 'We will compare your Facebook interests  with those  of your matches to display  any  common connections'.split('  ');
-    $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.editProfileModal = modal;
-    });
-
-    $scope.openEditProfileModal = function() {
-      $scope.editProfileModal.show();
-    }
-    $scope.closeEditProfileModal = function() {
-      $scope.editProfileModal.hide();
-    };
   })    
     /*Edit Profile*/
   .controller('WelcomeCtrl', function(Auth, $state, $scope) {
@@ -53,6 +40,20 @@ angular.module('gifchat.controllers', ['firebase'])
 
     var payOrInviteClicked;
     $scope.payOrInviteClicked = false;
+
+    $ionicModal.fromTemplateUrl('templates/modals/gift_energy.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.giftEnergyModal = modal;
+    });
+
+    $scope.openGiftEnergyModal = function() {
+      $scope.giftEnergyModal.show();
+    }
+    $scope.closeGiftEnergyModal = function() {
+      $scope.giftEnergyModal.hide();
+    };
     // GifChat cards
     var cards = [
       {
@@ -225,6 +226,20 @@ angular.module('gifchat.controllers', ['firebase'])
     $scope.closeSettingsModal = function() {
       $scope.modalSettings.hide();
     };
+
+    $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.editProfileModal = modal;
+    });
+
+    $scope.openEditProfileModal = function() {
+      $scope.editProfileModal.show();
+    };
+    $scope.closeEditProfileModal = function() {
+      $scope.editProfileModal.hide();
+    };
   })
 
   .controller('MatchesCtrl', function($scope) {
@@ -251,10 +266,6 @@ angular.module('gifchat.controllers', ['firebase'])
       },
       {
         name: 'Michelle',
-        isNew: false
-      },
-      {
-        name: 'Penelope',
         isNew: false
       }
     ]

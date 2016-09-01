@@ -27,13 +27,13 @@
         <div class="text-muted text-center l-h">
           <h5>Please Wait for 4 hours before you can explore more people</h5>
           <br>
-          <button class="button button-block button-positive" ng-click="payOrInviteClick()">I don't want to wait</button>
+          <button class="button button-block button-positive" ng-click="payModal()">I don't want to wait</button>
           <div ng-show="payOrInviteClicked">
             <button class="button button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
                Pay
             </button>
             <h5>OR</h5>
-            <button class="button button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
+            <button class="button button-stable" ng-click="openGiftEnergyModal(true)" >
               Invite Friends
             </button>
           </div>
@@ -74,7 +74,7 @@
               <span class="wrapper-xs b b-danger b-5x r-3x assertive font-bold text-3x">NOPE</span>
             </div>
             <div class="yes-text">
-              <span class="wrapper-xs b b-success b-5x r-3x balanced font-bold text-3x">LIKE</span>
+              <span class="wrapper-xs b b-success b-5x r-3x balanced font-bold text-3x" ng-click="">LIKE</span>
             </div>
           </div>
         </td-card>
@@ -98,7 +98,7 @@
         </button>
       </div>
       <div class="card-action">
-        <button class="button button-light rounded">
+        <button class="button button-light rounded" ng-click="openGiftEnergyModal(true)">
           <i class="icon ion-android-star text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'calm'"></i>
         </button>
       </div>
