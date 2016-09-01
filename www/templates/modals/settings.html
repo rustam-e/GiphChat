@@ -21,7 +21,7 @@
           </div>
           <div class="col-60 text-right">
             My Current Location
-            <div class="text-xs text-muted">San Francisco, California</div>
+            <div class="text-xs text-muted">{{currentUser.location.name}}</div>
           </div>
         </div>
         <span class="item-note m-l">
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-
+<!-- To be added later - especially the notifications settings
     <div class="list m-n">
       <div class="item item-divider b-none"></div>
       <div class="item item-toggle">
@@ -193,26 +193,28 @@
         </span>
       </div>
     </div>
-
+-->
     <div class="list m-n">
       <div class="item item-divider"></div>
-      <div class="item text-center" ng-click="closeSettingsModal()" ui-sref="welcome">
+      <div class="item text-center" ng-click="logout()">
         Logout
       </div>
 
       <div class="item item-divider text-center">
         <i class="icon ion-fireball assertive text-3x"></i>
         <br>
-        Version 5.0.1
+        Version 0.0.1
       </div>
         
-      </div>
-
+    </div>
+<!--
       <div class="item item-divider b-none"></div>
+
       <div class="item text-center">
         Delete Account
       </div>
+
       <div class="item item-divider text-center">
-    </div>
+      </div>-->
   </ion-content>
 </ion-modal-view>

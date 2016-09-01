@@ -8,7 +8,9 @@
     <div class="photos">
       <div class="row">
         <div class="col col-66">
-          <div photo-pickable number="1" img-src="photo1"></div>
+          <p>Current User: {{currentUser.firstName}}</p>
+        <!--
+          <div photo-pickable number="1" img-src="{{currentUser.photoUrl}}"></div>-->
         </div>
         <!--
         <div class="col col-33">
@@ -38,23 +40,7 @@
       </div>
     </div>
 
-    <div class="list m-n">
-      <div class="item item-divider b-none"></div>
-      <div class="item item-divider b-none">My Questions</div>
-      <div class="item">
-        Lord of the rings or The Matrix?
-      </div>
-    </br>
-      <div class="item">
-        Going for a Walk or Going for a cup of Coffee?
-      </div>
-    </br>
-      <div class="item">
-        Drinking or Dancing?
-      </div>
-    </br>
-    </div>
-
+<!--
     <div class="list m-n">
       <div class="item item-divider b-none"></div>
       <div class="item item-divider b-none">Current Work</div>
@@ -65,7 +51,6 @@
         </span>
       </div>
     </div>
-
     <div class="list m-n">
       <div class="item item-divider b-none"></div>
       <div class="item item-divider b-none">School</div>
@@ -84,12 +69,13 @@
         Connect Instagram
       </div>
     </div>
+-->
 
     <div class="list m-n">
       <div class="item item-divider b-none"></div>
       <div class="item item-divider b-none">Gender</div>
       <div class="item">
-        Male
+        {{currentUser.gender}} 
         <span class="item-note">
           <i class="icon ion-chevron-right"></i>
         </span>

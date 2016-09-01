@@ -27,18 +27,39 @@ angular.module('gifchat.services', ['firebase'])
   .factory('Auth', function($firebaseArray, $firebaseAuth, $firebaseObject, $state, $http) {
   var ref = firebase.database().ref();
   var profilesRef = ref.child('profiles');
-
-
   var auth = $firebaseAuth();
-  var Auth = {
+  var Auth = {    
+    currentUser: {},
     createProfile: function(user) {
       var profile = {
         name: user.displayName,
         email: user.email,
         photoUrl: user.photoURL,
-        uid: user.uid
+        uid: user.uid,
+        firstName: user.firstName,
+        location: user.location,
+        birthday: user.birthday,
+        gender: user.gender,
+        invitableFriends: user.invitableFriends,
+        friends: user.friends
       };
       return profilesRef.child(profile.uid).set(profile);
+    },
+
+    setCurrentUser: function(user) {
+      Auth.currentUser = {
+        name: user.displayName,
+        email: user.email,
+        photoUrl: user.photoURL,
+        uid: user.uid,
+        firstName: user.firstName,
+        location: user.location,
+        birthday: user.birthday,
+        gender: user.gender,
+        invitableFriends: user.invitableFriends,
+        friends: user.friends
+      };
+      return Auth.currentUser;
     },
 
     getProfile: function(uid) {
@@ -57,20 +78,30 @@ angular.module('gifchat.services', ['firebase'])
         // The signed-in user info.
         var user = result.user;
         // Getting info from graph API to save on the back-end
-        // first name
-        Auth.getFirstName(token).then(function(res){
-          user.firstName = res.data.first_name;
-          console.log(user);
-        }, function(err){
-          console.log('err', err);
+        // Async functions which return promises
+        var firstName = Auth.getFirstName(token).then(function(res){return res.data.first_name;}, function(err){console.log('err' + err);});
+        var location = Auth.getLocation(token).then(function(res){return res.data.location;}, function(err){console.log('err' + err);});
+        var birthday = Auth.getBirthday(token).then(function(res){return res.data.birthday;}, function(err){console.log('err' + err);});
+        var gender = Auth.getGender(token).then(function(res){return res.data.gender;}, function(err){console.log('err' + err);});
+        var invitable_friends = Auth.getInvitableFriends(token).then(function(res){return res.data.invitable_friends;}, function(err){console.log('err' + err);});
+        var friends = Auth.getFriends(token).then(function(res){return res.data.friends;}, function(err){console.log('err' + err);});
+
+        // Promise.all will wait for all promises to resolve before setting user properties
+        Promise.all([firstName, location, birthday, gender, invitable_friends, friends]).then(function(results){
+          //set extra variables
+          user.firstName = results[0];
+          user.location = results[1];
+          user.birthday = results[2];
+          user.gender = results[3];
+          user.invitableFriends = results[4];
+          user.friends = results[5];
+          //create profile
+          if (user != null) {
+            Auth.createProfile(user);
+            Auth.setCurrentUser(user);
+          }
         });
-
-
         //
-      //  console.log(user);
-        if (user != null) {
-          Auth.createProfile(user);
-        }
         // ...
       }).catch(function(error) {
         // Handle Errors here.
@@ -86,7 +117,7 @@ angular.module('gifchat.services', ['firebase'])
     },
 
     logout: function() {
-      return auth.$unauth();
+      return auth.$signOut();
     },
 
     getName: function(access_token) {
@@ -111,6 +142,10 @@ angular.module('gifchat.services', ['firebase'])
 
     getLocation: function(access_token) {
       return $http.get('https://graph.facebook.com/me?fields=location&access_token=' + access_token);
+    },
+
+    getFriends: function(access_token) {
+      return $http.get('https://graph.facebook.com/me?fields=friends&access_token=' + access_token);
     },
 
     getAbout: function(access_token) {
@@ -141,10 +176,10 @@ angular.module('gifchat.services', ['firebase'])
 
   auth.$onAuthStateChanged(function(user) {
     if(user) {
-      //console.log(user);
+      console.log('welcome');
 
     } else {
-      $state.go('login');
+      $state.go('welcome');
       console.log('You need to login.');
     }
   })  ;

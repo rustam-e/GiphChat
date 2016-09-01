@@ -1,5 +1,6 @@
 angular.module('gifchat.controllers', ['firebase'])
-  .controller('AppCtrl', function($scope, $ionicModal) {
+  .controller('AppCtrl', function(Auth, $scope, $ionicModal) {
+
     $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -16,8 +17,6 @@ angular.module('gifchat.controllers', ['firebase'])
     };
 
     $scope.interests = 'We will compare your Facebook interests  with those  of your matches to display  any  common connections'.split('  ');
-    
-    /*Edit Profile*/
     $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -31,7 +30,8 @@ angular.module('gifchat.controllers', ['firebase'])
     $scope.closeEditProfileModal = function() {
       $scope.editProfileModal.hide();
     };
-  })
+  })    
+    /*Edit Profile*/
   .controller('WelcomeCtrl', function(Auth, $state, $scope) {
 
     $scope.login = function() {
@@ -40,11 +40,6 @@ angular.module('gifchat.controllers', ['firebase'])
       return Auth.login().then(function(user) {
         $state.go('home.explore');
       });
-      
-    };
-
-    $scope.logout = function() {
-      Auth.logout();
     };
   })
   .controller('ExploreCtrl', function($firebaseArray, $scope, $ionicModal) {
@@ -210,6 +205,8 @@ angular.module('gifchat.controllers', ['firebase'])
   })
 
   .controller('SettingsCtrl', function(Auth, $scope, $ionicModal) {
+    $scope.currentUser = Auth.currentUser;
+    console.log($scope.currentUser);
 
     $ionicModal.fromTemplateUrl('templates/modals/settings.html', {
       scope: $scope,
@@ -219,6 +216,11 @@ angular.module('gifchat.controllers', ['firebase'])
     });
     $scope.openSettingsModal = function() {
       $scope.modalSettings.show();
+      $scope.logout = function() {
+        // angularfire sign out function from github docs
+        $scope.modalSettings.hide();
+        Auth.logout();
+      };
     };
     $scope.closeSettingsModal = function() {
       $scope.modalSettings.hide();
