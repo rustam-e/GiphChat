@@ -7,9 +7,12 @@
   <div class="bar bar-subheader item-input-inset bar-no-border">
     <h1 class="title">Ask friends for free energy!</h1>
   </div>
+  <ion-content>
     <div>
       <div class="wrapper font-bold text-u-c assertive">Friends</div>
-      <button class="button button-block button-positive" ng-click="openGiftEnergyModal()">Invite more friends</button>
+      <button class="button button-block button-positive" ng-click="openInviteModal()">Invite more friends</button>
+      <h5>OR</h5>
+      <button class="button button-stable" ng-click="openGiftEnergyModal(true)" >Ask for free energy</button>      
       <div>
         <div class="clear m-b-sm" ng-repeat="p in invitableFriends track by $index" nav-direction="forward" ui-sref="home.messaging({id: 2})">
           <img ng-src="{{p.picture.data.url}}" alt="" class="thumb-md rounded pull-left m-l m-r-md">

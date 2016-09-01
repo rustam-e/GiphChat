@@ -21,7 +21,7 @@
   <ion-content class="has-subheader">
     <div class="b-b b-light wrapper">
       <div class="m-b-md font-bold text-u-c assertive">New Matches <span class="rounded-matches text-center rounded color-white assertive-bg">2</span></div>
-      
+
       <ion-scroll direction="x" class="scroll-horizontal wrapper-xs">
         <div class="text-center scroll-item m-r-sm pos-rlt" ng-repeat="p in matches track by $index" nav-direction="forward" ui-sref="home.messaging({id: $index})">
           <img ng-src="video/giphy{{matches.indexOf(p)}}.gif" alt="" class="thumb-md rounded">

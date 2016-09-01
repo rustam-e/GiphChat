@@ -1,6 +1,6 @@
 <ion-view title="GifChat">
   <ion-header-bar>
-    <h1 class="title">Friends - get more stars, give more stars</h1>
+    <h1 class="title">Invite more Friends - get more stars, give more stars</h1>
     <button class="button button-clear button-assertive" ng-click="closeInviteModal()">Done</button>
   </ion-header-bar>
 
@@ -10,17 +10,16 @@
       <input type="search" placeholder="Search 7 Matches">
     </label>
   </div>
+  <ion-content>
     <div>
       <div class="wrapper font-bold text-u-c assertive">Friends</div>
-      <button class="button button-block button-positive" ng-click="openGiftEnergyModal()">Invite more friends</button>
+      <button class="button button-block button-positive" ng-click="console.log('dummy sendInvites()')">Invite more friends {{currentUser.firstName}}</button>
       <div>
-        <div class="wrapper font-bold text-u-c assertive">You have {{currentUser.friends.count}} friends using GifChat:</div>
-        <div class="clear m-b-sm" ng-repeat="p in currentUser.friends track by $index" nav-direction="forward" ui-sref="home.messaging({id: 2})">
-          <img ng-src="video/giphy{{matches.indexOf(p)}}.gif" alt="" class="thumb-md rounded pull-left m-l m-r-md">
+        <div class="clear m-b-sm" ng-repeat="p in invitableFriends track by $index" nav-direction="forward" ui-sref="home.messaging({id: 2})">
+          <img ng-src="{{p.picture.data.url}}" alt="" class="thumb-md rounded pull-left m-l m-r-md">
           <!-- <img ng-src="img/{{p.name}}.png" alt="" class="thumb-md rounded pull-left m-l m-r-md"> -->
           <div class="text-lg b-b b-light clear padder-v">
             <div class="text-c">{{p.name}}</div>
-            <p class="text-muted" ng-if="p.isNew">Send free energy!</p>
           </div>
         </div>
       </div>

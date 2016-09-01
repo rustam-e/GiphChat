@@ -59,6 +59,7 @@ angular.module('gifchat.services', ['firebase'])
         invitableFriends: user.invitableFriends,
         friends: user.friends
       };
+      console.log('Current User set: ');
       console.log(Auth.currentUser);
       return Auth.currentUser;
     },
@@ -98,8 +99,8 @@ angular.module('gifchat.services', ['firebase'])
           user.friends = results[5];
           //create profile
           if (user != null) {
-            Auth.createProfile(user);
             Auth.setCurrentUser(user);
+            Auth.createProfile(user);
           }
         });
         //

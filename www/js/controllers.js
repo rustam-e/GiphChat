@@ -1,6 +1,6 @@
 angular.module('gifchat.controllers', ['firebase'])
   .controller('AppCtrl', function(Auth, $scope, $ionicModal) {
-
+    console.log('App Controller initialized');
     $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -20,7 +20,8 @@ angular.module('gifchat.controllers', ['firebase'])
   })    
     /*Edit Profile*/
   .controller('WelcomeCtrl', function(Auth, $state, $scope) {
-
+    
+    console.log('Welcome Controller initialized');
     $scope.login = function() {
       console.log('Login cliked');
       
@@ -29,7 +30,8 @@ angular.module('gifchat.controllers', ['firebase'])
       });
     };
   })
-  .controller('ExploreCtrl', function($firebaseArray, $scope, $ionicModal) {
+  .controller('ExploreCtrl', function(Auth, $firebaseArray, $scope, $ionicModal) {
+    console.log('Explore Controller initialized');
     var ref = firebase.database().ref();
     var relationshipsRef = ref.child('relationships');
     var likesRef = relationshipsRef.child('likes');
@@ -46,13 +48,18 @@ angular.module('gifchat.controllers', ['firebase'])
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.giftEnergyModal = modal;
+      console.log('Gift Modal initialized');
     });
 
     $scope.openGiftEnergyModal = function() {
       $scope.giftEnergyModal.show();
+      console.log('Gift Modal shown');
+      // load necessary variables to avoid conflict - ugly, but temporary
+      $scope.invitableFriends = Auth.currentUser.invitableFriends.data;  
     }
     $scope.closeGiftEnergyModal = function() {
       $scope.giftEnergyModal.hide();
+      console.log('Gift Modal closed');
     };
     // GifChat cards
     var cards = [
@@ -192,13 +199,16 @@ angular.module('gifchat.controllers', ['firebase'])
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.matchModal = modal;
+      console.log('Match Modal initialized');
     });
 
     $scope.openMatchModal = function(isFromCard) {
       $scope.matchModal.show();
+      console.log("Match Modal shown");
     }
     $scope.closeMatchModal = function() {
       $scope.matchModal.hide();
+      console.log("Match Modal closed");
     };
 
     // Onload
@@ -206,25 +216,31 @@ angular.module('gifchat.controllers', ['firebase'])
   })
 
   .controller('SettingsCtrl', function(Auth, $scope, $ionicModal) {
+    console.log('Settings Controller initialized');
     $scope.currentUser = Auth.currentUser;
-    console.log($scope.currentUser);
 
     $ionicModal.fromTemplateUrl('templates/modals/settings.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.modalSettings = modal;
+      console.log('Settings Modal initilized');
     });
     $scope.openSettingsModal = function() {
       $scope.modalSettings.show();
+      console.log('Settings Modal opened');
+
       $scope.logout = function() {
         // angularfire sign out function from github docs
-        $scope.modalSettings.hide();
         Auth.logout();
+        console.log('Logout clicked');
+        $scope.modalSettings.hide();
+        console.log('Settings Modal closed');
       };
     };
     $scope.closeSettingsModal = function() {
       $scope.modalSettings.hide();
+      console.log('Settings Modal closed');
     };
 
     $ionicModal.fromTemplateUrl('templates/modals/profile_edit.html', {
@@ -232,13 +248,16 @@ angular.module('gifchat.controllers', ['firebase'])
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.editProfileModal = modal;
+      console.log('Edit Profile Modal initilized');
     });
 
     $scope.openEditProfileModal = function() {
       $scope.editProfileModal.show();
-    };
+      console.log('Edit Profile Modal shown');
+   };
     $scope.closeEditProfileModal = function() {
       $scope.editProfileModal.hide();
+      console.log('Edit Profile Modal closed');
     };
   })
 
