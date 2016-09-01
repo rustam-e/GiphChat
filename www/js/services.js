@@ -59,7 +59,6 @@ angular.module('gifchat.services', ['firebase'])
         invitableFriends: user.invitableFriends,
         friends: user.friends
       };
-      console.log('Current User set: ');
       console.log(Auth.currentUser);
       return Auth.currentUser;
     },
@@ -91,16 +90,20 @@ angular.module('gifchat.services', ['firebase'])
         // Promise.all will wait for all promises to resolve before setting user properties
         Promise.all([firstName, location, birthday, gender, invitable_friends, friends]).then(function(results){
           //set extra variables
-          user.firstName = results[0];
-          user.location = results[1];
-          user.birthday = results[2];
-          user.gender = results[3];
-          user.invitableFriends = results[4];
-          user.friends = results[5];
+          console.log('Resolved extra information promises array: ')
+          console.log(results);
+          if (results[0]){user.firstName = results[0];}
+          if (results[1]){user.location = results[1];}
+          if (results[2]){user.birthday = results[2];}
+          if (results[3]){user.gender = results[3];}
+          if (results[4]){user.invitableFriends = results[4];}
+          if (results[5]){user.friends = results[5];}
           //create profile
           if (user != null) {
             Auth.setCurrentUser(user);
+            console.log(Auth.currentUser);
             Auth.createProfile(user);
+            console.log('i wonder if this is going to be before or after the user is created');
           }
         });
         //

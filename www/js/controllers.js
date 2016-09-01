@@ -43,6 +43,8 @@ angular.module('gifchat.controllers', ['firebase'])
     var payOrInviteClicked;
     $scope.payOrInviteClicked = false;
 
+
+    // GiftEnergy Modal
     $ionicModal.fromTemplateUrl('templates/modals/gift_energy.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -55,12 +57,34 @@ angular.module('gifchat.controllers', ['firebase'])
       $scope.giftEnergyModal.show();
       console.log('Gift Modal shown');
       // load necessary variables to avoid conflict - ugly, but temporary
-      $scope.invitableFriends = Auth.currentUser.invitableFriends.data;  
+      $scope.friends = Auth.currentUser.friends.data;  
     }
     $scope.closeGiftEnergyModal = function() {
       $scope.giftEnergyModal.hide();
       console.log('Gift Modal closed');
     };
+
+    // Invite Modal
+    $ionicModal.fromTemplateUrl('templates/modals/invite.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.inviteModal = modal;
+      console.log('Invite Modal initialized');
+    });
+
+    $scope.openInviteModal = function() {
+      $scope.inviteModal.show();
+      console.log('Invite Modal shown');
+      // load necessary variables to avoid conflict - ugly, but temporary
+      $scope.invitableFriends = Auth.currentUser.invitableFriends.data;  
+    }
+    $scope.closeInviteModal = function() {
+      $scope.inviteModal.hide();
+      console.log('Invite Modal closed');
+    };
+
+
     // GifChat cards
     var cards = [
       {
