@@ -53,7 +53,22 @@ angular.module('gifchat.services')
         var invitable_friends = Auth.getInvitableFriends(token).then(function(res){return res.data.invitable_friends;}, function(err){console.log('err' + err);});
         var friends = Auth.getFriends(token).then(function(res){return res.data.friends;}, function(err){console.log('err' + err);});
         //helper variables
-        var imagesIds = Auth.getImagesIds(token).then(function(res){return res.data.photos.data;}, function(err){console.log('err' + err);});
+        var imagesIds = Auth.getImagesIds(token).then(function(res){
+          if(res.data.photos){
+            console.log(res);
+          return res.data.photos.data;
+          }else{
+            console.log('imageIds data does not exist');
+            return [];
+          }
+        }, function(err){console.log('err' + err);});
+        
+
+
+
+        imagesIds.then(function(images){console.log('images ids: ', images)});
+
+
         var pictureId = Auth.getPictureId(token).then(function(res){return res.data.id;}, function(err){console.log('err' + err);});
         // taking id returned by profilePictureId and returning a large image from it
         var picture = pictureId.then(function(id){
@@ -71,10 +86,14 @@ angular.module('gifchat.services')
         //receiving a list of ids 
         //saving them in an array of urls
           var urls = [];
-          //creating bunch of getProfile calls with the said ids
+          // creating bunch of getProfile calls with the said ids
+          // in case number of pictures is smaller than 5, I'm dynamically setting the loop index based on array length
+          if (array.length > 0) {
+            var indexEnd = function(){if(array.length > 5){return 5;}else{return array.length}};
 
-          for (i = 0; i < 5; i++) {
-            urls.push(Auth.getPicture(array[i].id));
+            for (i = 0; i < indexEnd; i++) {
+              urls.push(Auth.getPicture(array[i].id));
+            }            
           }
           //returning the array of urls, saving them as a user image property
           return urls;
