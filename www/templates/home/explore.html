@@ -49,8 +49,6 @@
           on-transition-left="transitionLeft(card)"
           on-transition-right="transitionRight(card)"
           on-transition-out="transitionOut(card)"
-          id="{{card.uid}}"
-
           class="card-{{$index}}"
           ng-style="{'z-index': cards.length - $index + 1}"><!-- Work around for The z-index missing issue-->
           <div class="card-GifChat bg-white" vertical layout ng-click="openProfileModal(true)">

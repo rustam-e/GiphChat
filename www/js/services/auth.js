@@ -1,73 +1,8 @@
-angular.module('gifchat.services', ['firebase'])
+angular.module('gifchat.services')
   /*
     Giphy Service
     Docs: https://github.com/Giphy/GiphyAPI#search-endpoint
   */
-  .service('Giphy', function($http) {
-    var API_KEY = 'dc6zaTOxFJmzC'; // Public Beta Key
-    var ENDPOINT = 'http://api.giphy.com/v1/gifs/';
-
-    this.search = function(query) {
-      return $http.get(ENDPOINT + 'search', {params: {
-        q: query,
-        api_key: API_KEY
-      }}).then(function(response) {
-        return response.data.data;
-      })
-    }
-
-    this.trending = function() {
-      return $http.get(ENDPOINT + 'trending', {params: {
-        api_key: API_KEY
-      }}).then(function(response) {
-        return response.data.data;
-      })
-    }
-  })
-  .factory('Dislike', function($firebaseArray) {
-      var ref = firebase.database().ref();
-      var relationshipsRef = ref.child('relationships');
-      var dislikesRef = relationshipsRef.child('dislikes');
-      console.log('Dislike Factory initialized');
-      console.log(ref);
-      console.log(dislikesRef);
-      var Dislike = {
-        allDisikesByUser: function(uid) {
-          return dislikesRef.child(uid);
-        },
-
-        addDislike: function(uid1, uid2) {
-          return dislikesRef.child(uid1).child(uid2).set(true);
-        },
-
-        removeDislike: function(uid1, uid2) {
-          return dislikesRef.child(uid1).child(uid2).remove();
-        }
-      };
-      return Dislike;
-    })
-    .factory('Like', function($firebaseArray) {
-    var ref = firebase.database().ref();
-    var relationshipsRef = ref.child('relationships');
-    var likesRef = relationshipsRef.child('likes');
-    console.log('Like factory initialized');
-    console.log(ref);
-    console.log(likesRef);
-    var Like = {
-      allLikesByUser: function(uid) {
-        return likesRef.child(uid);
-      },
-
-      addLike: function(uid1, uid2) {
-        return likesRef.child(uid1).child(uid2).set(true);
-      },
-
-      removeLike: function(uid1, uid2) {
-        return likesRef.child(uid1).child(uid2).remove();
-      }
-    };
-    return Like;
-  })
   .factory('Auth', function($firebaseArray, $firebaseAuth, $firebaseObject, $state, $http) {
   var ref = firebase.database().ref();
   var profilesRef = ref.child('profiles');
@@ -77,28 +12,27 @@ angular.module('gifchat.services', ['firebase'])
     createProfile: function(user) {
       var profile = {};
       // setting values if they exist
-      if(user.displayName){profile.name = user.displayName;}else{profile.name = {};};
-      if(user.email){profile.email = user.email;}else{profile.email = {};};
-      if(user.profilePicture){profile.profilePicture = user.profilePicture;}else{profile.profilePicture = {};};
-      if(user.uid){profile.uid = user.uid;}else{profile.uid = {};};
-      if(user.firstName){profile.firstName = user.firstName;}else{profile.firstName = {};};
-      if(user.location){profile.location = user.location;}else{profile.location = {};};
-      if(user.birthday){profile.birthday = user.birthday;}else{profile.birthday = {};};
-      if(user.gender){profile.gender = user.gender;}else{profile.gender = {};};
-      if(user.invitableFriends){profile.invitableFriends = user.invitableFriends;}else{profile.invitableFriends = {};};
-      if(user.friends){profile.friends = user.friends;}else{profile.friends = {};};
-      if(user.profilePicture){profile.profilePicture = user.profilePicture;}else{profile.profilePicture = {};};
-      if(user.images){profile.images = user.images;}else{profile.images = {};};
+      if(user.displayName){profile.name = user.displayName;}else{profile.name = {};}
+      if(user.email){profile.email = user.email;}else{profile.email = {};}
+      if(user.profilePicture){profile.profilePicture = user.profilePicture;}else{profile.profilePicture = {};}
+      if(user.uid){profile.uid = user.uid;}else{profile.uid = {};}
+      if(user.firstName){profile.firstName = user.firstName;}else{profile.firstName = {};}
+      if(user.location){profile.location = user.location;}else{profile.location = {};}
+      if(user.birthday){profile.birthday = user.birthday;}else{profile.birthday = {};}
+      if(user.gender){profile.gender = user.gender;}else{profile.gender = {};}
+      if(user.invitableFriends){profile.invitableFriends = user.invitableFriends;}else{profile.invitableFriends = {};}
+      if(user.friends){profile.friends = user.friends;}else{profile.friends = {};}
+      if(user.profilePicture){profile.profilePicture = user.profilePicture;}else{profile.profilePicture = {};}
+      if(user.images){profile.images = user.images;}else{profile.images = {};}
+      if(user.age){profile.age = user.age;}else{profile.age = {};}
       //saving them to the database
       return profilesRef.child(profile.uid).set(profile);
-      console.log('created profile with following object: ');
-      console.log(profile);
+      console.log('created profile with following object: ', profile);
     },
 
     setCurrentUser: function(user) {
       Auth.currentUser = user;
-      console.log('Set Current User to: ');
-      console.log(Auth.currentUser);
+      console.log('Set Current User to: ', Auth.currentUser);
     },
 
     login: function() {
@@ -107,8 +41,7 @@ angular.module('gifchat.services', ['firebase'])
       return firebase.auth().signInWithPopup(provider).then(function(result) {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         var token = result.credential.accessToken;
-        console.log('access token: ');
-        console.log(token);
+        console.log('access token: ', token);
         // The signed-in user info.
         var user = result.user;
         // Getting info from graph API to save on the back-end
@@ -124,11 +57,13 @@ angular.module('gifchat.services', ['firebase'])
         var pictureId = Auth.getPictureId(token).then(function(res){return res.data.id;}, function(err){console.log('err' + err);});
         // taking id returned by profilePictureId and returning a large image from it
         var picture = pictureId.then(function(id){
-          console.log('profile picture id:');
-          console.log(id);
+          console.log('profile picture id:', id);
           return Auth.getPicture(id);
         }, function(err){
           console.log('err' + err);
+        });
+        var age = birthday.then(function(birthday){
+          return Auth.getAge(birthday);
         });
         //declaring array where we'll store promises
         // iterating over the array of IDs after they're loaded
@@ -145,21 +80,19 @@ angular.module('gifchat.services', ['firebase'])
           return urls;
         });
         // Promise.all will wait for all promises to resolve before setting user properties
-        Promise.all([firstName, location, birthday, gender, invitable_friends, friends, picture, imagesUrls, imagesIds, pictureId]).then(function(results){
+        Promise.all([firstName, location, birthday, gender, invitable_friends, friends, picture, imagesUrls, age, imagesIds, pictureId]).then(function(results){
           //set extra variables
-          console.log('Resolved extra information promises array: ');
-          console.log(results);
-          if (results[0]){user.firstName = results[0];};
-          if (results[1]){user.location = results[1];};
-          if (results[2]){user.birthday = results[2];};
-          if (results[3]){user.gender = results[3];};
-          if (results[4]){user.invitableFriends = results[4];};
-          if (results[5]){user.friends = results[5];};
-          if (results[6]){user.profilePicture = results[6];};
-          if (results[7]){user.images = results[7];};
-          console.log('final user object');
-          console.log(user);
-          console.log(user.images);
+          console.log('Resolved extra information promises array: ', results);
+          if (results[0]){user.firstName = results[0];}
+          if (results[1]){user.location = results[1];}
+          if (results[2]){user.birthday = results[2];}
+          if (results[3]){user.gender = results[3];}
+          if (results[4]){user.invitableFriends = results[4];}
+          if (results[5]){user.friends = results[5];}
+          if (results[6]){user.profilePicture = results[6];}
+          if (results[7]){user.images = results[7];}
+          if (results[8]){user.age = results[8];}
+          console.log('final user object', user, user.images);
 
           //create profile
           if (user != null) {
@@ -261,7 +194,7 @@ angular.module('gifchat.services', ['firebase'])
       $state.go('welcome');
       console.log('You need to login.');
     }
-  })  ;
+  });
 
   return Auth;
 
