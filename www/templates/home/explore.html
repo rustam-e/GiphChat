@@ -43,12 +43,14 @@
       <td-cards fit>
         <td-card ng-repeat="card in cards" 
           on-destroy="cardDestroyed($index)" 
-          on-swipe-left="cardSwipedLeft($event, $index)" 
-          on-swipe-right="cardSwipedRight($event, $index)" 
+          on-swipe-left="cardSwipedLeft()" 
+          on-swipe-right="cardSwipedRight()" 
           on-partial-swipe="cardPartialSwipe(amt)" 
           on-transition-left="transitionLeft(card)"
           on-transition-right="transitionRight(card)"
           on-transition-out="transitionOut(card)"
+          id="{{card.uid}}"
+
           class="card-{{$index}}"
           ng-style="{'z-index': cards.length - $index + 1}"><!-- Work around for The z-index missing issue-->
           <div class="card-GifChat bg-white" vertical layout ng-click="openProfileModal(true)">
@@ -74,7 +76,7 @@
               <span class="wrapper-xs b b-danger b-5x r-3x assertive font-bold text-3x">NOPE</span>
             </div>
             <div class="yes-text">
-              <span class="wrapper-xs b b-success b-5x r-3x balanced font-bold text-3x" ng-click="">LIKE</span>
+              <span class="wrapper-xs b b-success b-5x r-3x balanced font-bold text-3x">LIKE</span>
             </div>
           </div>
         </td-card>
@@ -87,12 +89,12 @@
           <i class="icon ion-refresh energized text-2x rounded"></i>
         </button>
       </div>
-      <div class="card-action bigger-button">
+      <div class="card-action bigger-button" ng-click="cardSwipedLeft()">
         <button class="button button-large button-light rounded" ng-class="{zoom: isMoveLeft}" ng-click="cardDestroyed(0)">
           <i class="icon ion-close-round text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'assertive'"></i>
         </button>
       </div>
-      <div class="card-action bigger-button">
+      <div class="card-action bigger-button" ng-click="cardSwipedRight()">
         <button class="button button-large button-light rounded" ng-class="{zoom: isMoveRight}" ng-click="cardDestroyed(0)">
           <i class="icon ion-heart text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'balanced'"></i>
         </button>

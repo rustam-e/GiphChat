@@ -24,6 +24,50 @@ angular.module('gifchat.services', ['firebase'])
       })
     }
   })
+  .factory('Dislike', function($firebaseArray) {
+      var ref = firebase.database().ref();
+      var relationshipsRef = ref.child('relationships');
+      var dislikesRef = relationshipsRef.child('dislikes');
+      console.log('Dislike Factory initialized');
+      console.log(ref);
+      console.log(dislikesRef);
+      var Dislike = {
+        allDisikesByUser: function(uid) {
+          return dislikesRef.child(uid);
+        },
+
+        addDislike: function(uid1, uid2) {
+          return dislikesRef.child(uid1).child(uid2).set(true);
+        },
+
+        removeDislike: function(uid1, uid2) {
+          return dislikesRef.child(uid1).child(uid2).remove();
+        }
+      };
+      return Dislike;
+    })
+    .factory('Like', function($firebaseArray) {
+    var ref = firebase.database().ref();
+    var relationshipsRef = ref.child('relationships');
+    var likesRef = relationshipsRef.child('likes');
+    console.log('Like factory initialized');
+    console.log(ref);
+    console.log(likesRef);
+    var Like = {
+      allLikesByUser: function(uid) {
+        return likesRef.child(uid);
+      },
+
+      addLike: function(uid1, uid2) {
+        return likesRef.child(uid1).child(uid2).set(true);
+      },
+
+      removeLike: function(uid1, uid2) {
+        return likesRef.child(uid1).child(uid2).remove();
+      }
+    };
+    return Like;
+  })
   .factory('Auth', function($firebaseArray, $firebaseAuth, $firebaseObject, $state, $http) {
   var ref = firebase.database().ref();
   var profilesRef = ref.child('profiles');

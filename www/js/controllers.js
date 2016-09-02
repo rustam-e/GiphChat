@@ -1,6 +1,5 @@
 angular.module('gifchat.controllers', ['firebase'])
   .controller('AppCtrl', function(Auth, $scope, $ionicModal) {
-    console.log('App Controller initialized');
     $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -11,7 +10,7 @@ angular.module('gifchat.controllers', ['firebase'])
     $scope.openProfileModal = function(isFromCard) {
       $scope.isFromCard = isFromCard;
       $scope.profileModal.show();
-    }
+    };
     $scope.closeProfileModal = function() {
       $scope.profileModal.hide();
     };
@@ -30,12 +29,8 @@ angular.module('gifchat.controllers', ['firebase'])
       });
     };
   })
-  .controller('ExploreCtrl', function(Auth, $firebaseArray, $scope, $ionicModal) {
+  .controller('ExploreCtrl', function(Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal) {
     console.log('Explore Controller initialized');
-    var ref = firebase.database().ref();
-    var relationshipsRef = ref.child('relationships');
-    var likesRef = relationshipsRef.child('likes');
-    var dislikesRef = relationshipsRef.child('dislikes');
     //trying to get current user
     var user = firebase.auth().currentUser;
     //console.log(user);
@@ -58,7 +53,7 @@ angular.module('gifchat.controllers', ['firebase'])
       console.log('Gift Modal shown');
       // load necessary variables to avoid conflict - ugly, but temporary
       $scope.friends = Auth.currentUser.friends.data;  
-    }
+    };
     $scope.closeGiftEnergyModal = function() {
       $scope.giftEnergyModal.hide();
       console.log('Gift Modal closed');
@@ -78,7 +73,7 @@ angular.module('gifchat.controllers', ['firebase'])
       console.log('Invite Modal shown');
       // load necessary variables to avoid conflict - ugly, but temporary
       $scope.invitableFriends = Auth.currentUser.invitableFriends.data;  
-    }
+    };
     $scope.closeInviteModal = function() {
       $scope.inviteModal.hide();
       console.log('Invite Modal closed');
@@ -169,6 +164,7 @@ angular.module('gifchat.controllers', ['firebase'])
     }
     
     $scope.cardDestroyed = function(index) {
+      console.log('card destroyed:');
       console.log(index);
       $scope.cards.splice(index, 1);
       _addCards(1);
@@ -182,40 +178,35 @@ angular.module('gifchat.controllers', ['firebase'])
 
     // For reasons, the cardSwipedRight and cardSwipedLeft events don’t get called always
     // https://devdactic.com/optimize-tinder-cards/
-    $scope.cardSwipedLeft = function(event, index) {
-      console.log($scope.cards[index], 'NOPE');
-      var dislike = {
-        from: user.uid,
-        to: $scope.cards[index].uid
-      };
-      return $firebaseArray(dislikesRef).$add(dislike);
+
+    $scope.cardSwipedLeft = function() {
+      $scope.otherId = cards[0].uid;
+      console.log('current card object: ', cards[0]);
+      Dislike.addDislike(Auth.currentUser.uid, $scope.otherId);
+
       event.stopPropagation();
-    }
+    };
 
-    $scope.cardSwipedRight = function(event, index) {
-      console.log($scope.cards[index], 'LIKE');
-      var like = {
-        from: user.uid,
-        to: $scope.cards[index].uid
-      };
-      return $firebaseArray(likesRef).$add(like);
-
+    $scope.cardSwipedRight = function() {
+      $scope.otherId = cards[0].uid;
+      console.log('current card object: ', cards[0]);
+      Like.addLike(Auth.currentUser.uid, $scope.otherId);
 
       event.stopPropagation();
 
       // Open Match popup
       if (cards.length % 3 == 1) $scope.openMatchModal();
-    }
+    };
 
     $scope.cardPartialSwipe = function(amt) {
       $scope.isMoveLeft = amt < -0.15;
       $scope.isMoveRight = amt > 0.15;  
-    }
+    };
 
     $scope.reset = function() {
       cards = angular.copy(resetCards);
       _addCards(2);
-    }
+    };
 
     // Match popup
     $ionicModal.fromTemplateUrl('templates/modals/match.html', {
@@ -229,7 +220,7 @@ angular.module('gifchat.controllers', ['firebase'])
     $scope.openMatchModal = function(isFromCard) {
       $scope.matchModal.show();
       console.log("Match Modal shown");
-    }
+    };
     $scope.closeMatchModal = function() {
       $scope.matchModal.hide();
       console.log("Match Modal closed");
@@ -314,7 +305,7 @@ angular.module('gifchat.controllers', ['firebase'])
         name: 'Michelle',
         isNew: false
       }
-    ]
+    ];
   })
 
   // Inspired by Elastichat http://codepen.io/rossmartin/pen/XJmpQr
@@ -383,7 +374,7 @@ angular.module('gifchat.controllers', ['firebase'])
       $scope.message = '';
       _scrollBottom();
       $scope.fakeReply();
-    }
+    };
 
     $scope.sendGif = function(imageUrl) {
       console.log(imageUrl);
@@ -395,7 +386,7 @@ angular.module('gifchat.controllers', ['firebase'])
       $scope.message = '';
       _scrollBottom('#type-area2');
       $scope.fakeReply();
-    }
+    };
 
     $scope.fakeReply = function() {
       $timeout(function() {
@@ -409,12 +400,12 @@ angular.module('gifchat.controllers', ['firebase'])
       $scope.message = '';
       _scrollBottom();
       }, 500)
-    }
+    };
 
     $scope.openGiphy = function() {
       $scope.isGifShown = true;
       $scope.message = '';
-    }
+    };
 
     var _scrollBottom = function(target) {
       target = target || '#type-area';
@@ -422,7 +413,7 @@ angular.module('gifchat.controllers', ['firebase'])
       viewScroll.scrollBottom(true);
       _keepKeyboardOpen(target);
       if ($scope.isNew) $scope.isNew = false;
-    }
+    };
 
     // Warning: Demo purpose only. Stay away from DOM manipulating like this
     var _keepKeyboardOpen = function(target) {
@@ -434,7 +425,7 @@ angular.module('gifchat.controllers', ['firebase'])
         console.log('textarea blur, focus back on it');
         txtInput[0].focus();
       });
-    }
+    };
 
     $scope.$watch('gifQuery', function(newValue) {
       if (newValue.length) {
@@ -468,7 +459,7 @@ angular.module('gifchat.controllers', ['firebase'])
           return true;
         }
       });
-    }
+    };
 
     // Onload
     var _initGiphy = function() {
@@ -476,6 +467,6 @@ angular.module('gifchat.controllers', ['firebase'])
         .then(function(gifs) {
           $scope.gifs = gifs;
         });
-    }
+    };
     _initGiphy();
   })
