@@ -1,8 +1,106 @@
 angular.module('gifchat.controllers')
-  .controller('ExploreCtrl', function(Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal) {
+  .controller('ExploreCtrl', function(Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal, $q) {
     console.log('Explore Controller initialized');
+
     //trying to get current user
     var user = firebase.auth().currentUser;
+    var currentUid = user.uid;
+    // setting card indexes
+    $scope.currentIndex = null;
+    $scope.currentCardUid = null;
+
+    var maxAge = null;
+    var men = null;
+    var women = null;
+    var home = this;
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+    function init() {
+      home.profiles = [];
+      maxAge = JSON.parse(window.localStorage.getItem('maxAge')) || 25;
+      console.log('maxAge: ', maxAge);
+
+      men = JSON.parse(window.localStorage.getItem('men'));
+      console.log('men ', men);
+      men = men === null? true : men;
+      console.log('men ', men);
+
+      women = JSON.parse(window.localStorage.getItem('women'));
+      console.log('women ', women);
+      women = women === null? true : women;
+      console.log('women ', women);
+
+      var returnedData = Auth.getProfilesByAge(maxAge);
+      console.log('getprofilesbyage returns:  ', returnedData);
+
+      returnedData.once('value').then(function(snapshot) {
+        var data = snapshot.val();
+        console.log('data array: ', data.length, data);
+        for (var i in data) {
+          var item = data[i];
+          console.log('Auth.getProfilesByAge item index: ', item);
+
+          if ((item.gender == 'male' && men) || (item.gender == 'female' && women)) {
+            if (item.uid != currentUid)
+              home.profiles.push(item);
+              console.log ('currentUid: ', currentUid);
+              console.log ('itemuid: ', item.uid);
+              console.log ('person gender: ', item.gender);
+              console.log ('person id: ', item.uid);
+              console.log('home.profiles ', home.profiles);
+          }
+        }
+
+        console.log('home.profiles ', home.profiles);
+
+        Like.allLikesByUser(currentUid).then(function(likesList) {
+          home.profiles = _.filter(home.profiles, function(obj) {
+            answer = _.isEmpty(_.where(likesList, {uid: obj.uid}));
+            console.log('Like.allLikesByUser returns: ', answer);
+            return answer;
+          });
+        });
+
+        if (home.profiles.length > 0) {
+          $scope.currentIndex = home.profiles.length - 1;
+          $scope.currentCardUid = home.profiles[$scope.currentIndex].uid;
+        }        
+      });
+    }
+
+    $scope.$on('$ionicView.enter', function(e) {
+      init();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+
     //console.log(user);
 
     var payOrInviteClicked;
@@ -49,9 +147,9 @@ angular.module('gifchat.controllers')
       console.log('Invite Modal closed');
     };
 
-
-    // GifChat cards
-    var cards = [
+/*
+    // GifChathome.profiles
+    varhome.profiles = [
       {
         name: 'Max',
         age: 25,
@@ -117,8 +215,9 @@ angular.module('gifchat.controllers')
         image: "video/giphy4.gif" 
       }
     ];
-    var resetCards = angular.copy(cards);
-    $scope.cards = [];
+    */
+    var resetCards = angular.copy(home.profiles);
+    home.profiles = [];
 
     function payOrInviteClick () {
       $scope.payOrInviteClicked = true;
@@ -126,44 +225,46 @@ angular.module('gifchat.controllers')
     }
 
     function _addCards(quantity) {
-      for (var i = 0; i < Math.min(cards.length, quantity); i++) {
-        $scope.cards.push(cards[0]);
-        cards.splice(0, 1);
+      for (var i = 0; i < Math.min(home.profiles.length, quantity); i++) {
+        home.profiles.push(home.profiles[0]);
+       home.profiles.splice(0, 1);
       }
     }
     
     $scope.cardDestroyed = function(index) {
-      console.log($scope.cards, 'card destroyed:', $scope.cards[index], index);
-      $scope.cards.splice(index, 1);
+      console.log(home.profiles, 'card destroyed:', home.profiles[index], index);
+      home.profiles.splice(index, 1);
       _addCards(1);
       $scope.isMoveLeft = false;
       $scope.isMoveRight = false;
     };
 
-    $scope.cardSwiped = function(index) {
-      $scope.cards.push(cards[Math.floor(Math.random(1)*8)]);
+    home.profileswiped = function(index) {
+      home.profiles.push(home.profiles[Math.floor(Math.random(1)*8)]);
     };
 
-    // For reasons, the cardSwipedRight and cardSwipedLeft events don’t get called always
+    // For reasons, thehome.profileswipedRight andhome.profileswipedLeft events don’t get called always
     // https://devdactic.com/optimize-tinder-cards/
 
-    $scope.cardSwipedLeft = function() {
-      $scope.otherId = $scope.cards[0].uid;
-      console.log('current card object: ', $scope.cards[0]);
+    home.profileswipedLeft = function() {
+      $scope.otherId = home.profiles[0].uid;
+      console.log('current card object: ', home.profiles[0]);
       Dislike.addDislike(Auth.currentUser.uid, $scope.otherId);
 
       event.stopPropagation();
     };
 
-    $scope.cardSwipedRight = function() {
-      $scope.otherId = $scope.cards[0].uid;
-      console.log('current card object: ', $scope.cards[0]);
-      Like.addLike(Auth.currentUser.uid, $scope.otherId);
+    home.profileswipedRight = function() {
+      $scope.otherId = home.profiles[0].uid;
+      console.log('current card object: ', home.profiles[0]);
+      Like.addLike(currentUid, $scope.otherId);
+      Match.checkMatch(currentUid, $scope.otherId);
+
 
       event.stopPropagation();
 
       // Open Match popup
-      if (cards.length % 3 == 1) $scope.openMatchModal();
+      if (home.profiles.length % 3 == 1) $scope.openMatchModal();
     };
 
     $scope.cardPartialSwipe = function(amt) {
@@ -172,7 +273,7 @@ angular.module('gifchat.controllers')
     };
 
     $scope.reset = function() {
-      cards = angular.copy(resetCards);
+     home.profiles = angular.copy(resetCards);
       _addCards(2);
     };
 

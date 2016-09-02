@@ -3,7 +3,7 @@ angular.module('gifchat.services')
     Giphy Service
     Docs: https://github.com/Giphy/GiphyAPI#search-endpoint
   */
-  .factory('Auth', function($firebaseArray, $firebaseAuth, $firebaseObject, $state, $http) {
+  .factory('Auth', function($firebaseArray, $firebaseAuth, $firebaseObject, $state, $http, $q) {
   var ref = firebase.database().ref();
   var profilesRef = ref.child('profiles');
   var auth = $firebaseAuth();
@@ -63,7 +63,10 @@ angular.module('gifchat.services')
           }
         }, function(err){console.log('err' + err);});
         
-
+        var getTheDamnProfiles = function(age){
+          var promise = Auth.getProfilesByAge(age).then(function(res){return res.data;}, function(err){console.log('err' + err);});
+          var answer = promise.then(function(resp){return resp;}, function(error){console.log('err', err)});
+        };
 
 
         imagesIds.then(function(images){console.log('images ids: ', images)});
@@ -200,7 +203,13 @@ angular.module('gifchat.services')
     },
 
     getProfilesByAge: function(age) {
-      return $firebaseArray(ref.child('profiles').orderByChild('age').startAt(18).endAt(age));
+      //var deferred = $q.defer();
+      return profilesRef.orderByChild('age').startAt(18).endAt(age);
+      //starCountRef.on('value', function(snapshot) {
+      //  updateStarCount(postElement, snapshot.val());
+      //});
+      //deferred.resolve(items);
+      //console.log(deferred.promise);
     }         
 
   };
