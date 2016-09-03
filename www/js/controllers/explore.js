@@ -1,5 +1,5 @@
 angular.module('gifchat.controllers')
-  .controller('ExploreCtrl', function(Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal, $q) {
+  .controller('ExploreCtrl', function(Match, Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal, $q) {
     console.log('Explore Controller initialized');
 
     //trying to get current user
@@ -62,6 +62,7 @@ angular.module('gifchat.controllers')
           $scope.cards = _.filter($scope.cards, function(obj) {
             return _.isEmpty(_.where(likesList, {uid: obj.uid}));
           });
+          console.log('$scope.cards inside alllikes', $scope.cards);
         });
 
         if ($scope.cards.length > 0) {
@@ -149,6 +150,7 @@ angular.module('gifchat.controllers')
     // https://devdactic.com/optimize-tinder-cards/
 
     $scope.cardSwipedLeft = function() {
+      console.log('$scope.cards inside swipe left', $scope.cards);
       $scope.otherId = $scope.cards[0].uid;
       console.log('current card object: ', $scope.cards[0]);
       Dislike.addDislike(currentUid, $scope.otherId);
@@ -157,6 +159,7 @@ angular.module('gifchat.controllers')
     };
 
     $scope.cardSwipedRight = function() {
+      console.log('$scope.cards inside swipe right', $scope.cards);
       $scope.otherId = $scope.cards[0].uid;
       console.log('current card object: ', $scope.cards[0]);
       Like.addLike(currentUid, $scope.otherId);
