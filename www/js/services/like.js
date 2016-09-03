@@ -10,7 +10,10 @@ angular.module('gifchat.services')
     console.log('Like factory initialized, ','ref: ', ref,', likesRef: ', likesRef);
     var Like = {
       allLikesByUser: function(uid) {
-        return likesRef.child(uid);
+        var deferred = $q.defer();
+        var items = likesRef.child(uid);
+        deferred.resolve(items);
+        return deferred.promise;
       },
 
       addLike: function(uid1, uid2) {

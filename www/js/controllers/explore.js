@@ -3,8 +3,8 @@ angular.module('gifchat.controllers')
     console.log('Explore Controller initialized');
 
     //trying to get current user
-    $scope.user = firebase.auth().currentUser;
-    var currentUid = $scope.user.uid;
+    var user = firebase.auth().currentUser;
+    var currentUid = user.uid;
     // setting card indexes
     $scope.currentIndex = null;
     $scope.currentCardUid = null;
@@ -56,21 +56,18 @@ angular.module('gifchat.controllers')
           }
         }
 
-        var likesData = Like.allLikesByUser(currentUid);
-        likesData.once('value').then(function(likesList) {
+        console.log('$scope.cards ', $scope.cards);
 
-          console.log('likesData returns: ', likesList.val());
-          /*
+        Like.allLikesByUser(currentUid).then(function(likesList) {
           $scope.cards = _.filter($scope.cards, function(obj) {
             return _.isEmpty(_.where(likesList, {uid: obj.uid}));
-          }); */
+          });
         });
 
         if ($scope.cards.length > 0) {
           $scope.currentIndex = $scope.cards.length - 1;
           $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
-        }
-        console.log('$scope.cards after filtering: ', $scope.cards);        
+        }        
       });
     }
 
@@ -79,7 +76,6 @@ angular.module('gifchat.controllers')
     });
 
 ///////////////////////////////////////////////////////////////////////////////////////
-    console.log('$scope.cards ', $scope.cards);
 
 ///////////////////////////////////
     // GiftEnergy Modal
@@ -145,7 +141,6 @@ angular.module('gifchat.controllers')
       $scope.isMoveLeft = false;
       $scope.isMoveRight = false;
     };
-
     $scope.cardSwiped = function(index) {
       $scope.cards.push($scope.cards[Math.floor(Math.random(1)*8)]);
     };
@@ -156,7 +151,7 @@ angular.module('gifchat.controllers')
     $scope.cardSwipedLeft = function() {
       $scope.otherId = $scope.cards[0].uid;
       console.log('current card object: ', $scope.cards[0]);
-      Dislike.addDislike(Auth.currentUser.uid, $scope.otherId);
+      Dislike.addDislike(currentUid, $scope.otherId);
 
       event.stopPropagation();
     };
