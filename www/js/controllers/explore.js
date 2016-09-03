@@ -1,120 +1,85 @@
 angular.module('gifchat.controllers')
-  .controller('ExploreCtrl', function(Match, Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal, $q) {
-    console.log('Explore Controller initialized');
-
+.controller('ExploreCtrl', function(Match, Dislike, Like, Auth, $firebaseArray, $scope, $ionicModal, $q) {
+    console.log('Explore Controller initialized');    
     //trying to get current user
     var user = firebase.auth().currentUser;
     var currentUid = user.uid;
-    // setting card indexes
-    $scope.currentIndex = null;
-    $scope.currentCardUid = null;
-
-    var maxAge = null;
-    var men = null;
-    var women = null;
-    var home = this;
-
-    //console.log(user);
-
-    var payOrInviteClicked;
-    $scope.payOrInviteClicked = false;
-///////////////////////////////////////////////////////////////////////////////////////
-
+    console.log('currentUid: ', currentUid);
+    //setting to the default value - needs to be dynamically updated with a setter method later
+    var maxAge = 86;
+    // setting init variables
+    //cards for the UI
+    $scope.cards = {};
     function init() {
-      $scope.cards = [];
-      maxAge = JSON.parse(window.localStorage.getItem('maxAge')) || 25;
-      console.log('maxAge: ', maxAge);
-
-      men = JSON.parse(window.localStorage.getItem('men'));
-      console.log('men ', men);
-      men = men === null? true : men;
-      console.log('men ', men);
-
-      women = JSON.parse(window.localStorage.getItem('women'));
-      console.log('women ', women);
-      women = women === null? true : women;
-      console.log('women ', women);
-
       var returnedData = Auth.getProfilesByAge(maxAge);
-      console.log('getprofilesbyage returns:  ', returnedData);
-
       returnedData.once('value').then(function(snapshot) {
-        var data = snapshot.val();
-        console.log('data array: ', data.length, data);
-        for (var i in data) {
-          var item = data[i];
-          console.log('Auth.getProfilesByAge item index: ', item);
-
-          if ((item.gender == 'male' && men) || (item.gender == 'female' && women)) {
-            if (item.uid != currentUid)
-              $scope.cards.push(item);
-              console.log ('currentUid: ', currentUid);
-              console.log ('itemuid: ', item.uid);
-              console.log ('person gender: ', item.gender);
-              console.log ('person id: ', item.uid);
-              console.log('$scope.cards ', $scope.cards);
+          var data = snapshot.val();
+          console.log('getprofilesbyage returns:  ', data);
+          removePerson(data, user);
+          console.log('data after eliminating the user from the list: ', data);
+          if ($scope.cards.length > 0) {
+            $scope.currentIndex = $scope.cards.length - 1;
+            $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
           }
-        }
+          // getting likes data in parallel
+          var likesListData = Like.allLikesByUser(currentUid);
 
-        console.log('$scope.cards ', $scope.cards);
+          likesListData.once('value').then(function(snapshot) {
+            likesList = snapshot.val();
+            console.log('list of people you have already liked before conversion to array', likesList);
+            likesList = jsonIndexesToArray(likesList);
+            console.log('list of people you have already liked after conversion to array: ', likesList);
+            // remove common elements from both object and the array
 
-        var likesListData = Like.allLikesByUser(currentUid);
-
-        likesListData.once('value').then(function(snapshot) {
-          likesList = snapshot.val();
-          console.log('likes list snapshot val', likesList);
-          $scope.cards = _.filter($scope.cards, function(obj) {
-            return _.isEmpty(_.where(likesList, {uid: obj.uid}));
+            $scope.$apply(function() {
+                $scope.cards = filterCardsByFromLikes(data, likesList);
+            });
+           // $scope.cards = filterCardsByFromLikes(data, likesList);
+            // test if it worked
+            console.log('array of objects after removing people you have liked already ', $scope.cards);
           });
-          console.log('$scope.cards inside alllikes', $scope.cards);
-          // remove common elements from both object and the array
-          filterCardsByFromLikes($scope.cards, likesList);
-          // test if it worked
-          console.log('array of objects after removing people you have liked already ', $scope.cards);
-
-        });
-
-        if ($scope.cards.length > 0) {
-          $scope.currentIndex = $scope.cards.length - 1;
-          $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
-        }        
       });
-    }
 
-    function filterCardsByFromLikes(cards, likes){
-      //loop every value in likes
-      console.log("cards: " , cards);
-      console.log("likes: " , likes);
-
-      for (var like in likes){
-        console.log('Objects which user has already liked: ', like);
-        // second loop to compare the values
-        for (var i = 0;  i < cards.length; i++) {
-          if (like === cards[i].uid){
-            removeByIndex($scope.cards, cards[i]);
-          }
-        }
-      }
-    }
-
-    function removeByIndex(arr, index) {
-      arr.splice(index, 1);
-    }
-
-    function removeByValue(arr, val) {
-      for(var i=0; i<arr.length; i++) {
-        if(arr[i] == val) {
-          arr.splice(i, 1);
-          break;
-        }
-      }
-    }
-
+    }    // getting user data to populate the cards
     $scope.$on('$ionicView.enter', function(e) {
       init();
     });
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////            
+    $scope.cardDestroyed = function(index) {
+      console.log($scope.cards, 'card destroyed:', $scope.cards[index], index);
+      removePerson($scope.cards, $scope.cardsp[index]);
+//      $scope.cards.splice(index, 1);
+    };
+
+
+    $scope.cardSwipedLeft = function(index) {
+      console.log('$scope.cards inside swipe left', $scope.cards);
+      console.log('current card object: ', $scope.cards[index]);
+      Dislike.addDislike(currentUid, index);
+      $scope.cardRemoved(index);
+    };
+
+    $scope.cardSwipedRight = function(index) {
+      console.log('$scope.cards inside swipe right', $scope.cards);
+      console.log('current card object: ', $scope.cards[index]);
+      Like.addLike(currentUid, index);
+      Match.checkMatch(currentUid, index);
+      $scope.cardRemoved(index);
+    };
+
+    $scope.cardRemoved = function(index) {
+      removePerson($scope.cards, index);
+
+      if ($scope.cards.length > 0) {
+        $scope.currentIndex = $scope.cards.length - 1;
+        $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
+      }
+    };
+
+
+//// Modals related initialization and functions
 
 ///////////////////////////////////
     // GiftEnergy Modal
@@ -136,7 +101,7 @@ angular.module('gifchat.controllers')
       $scope.giftEnergyModal.hide();
       console.log('Gift Modal closed');
     };
-///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Invite Modal
     $ionicModal.fromTemplateUrl('templates/modals/invite.html', {
       scope: $scope,
@@ -157,177 +122,61 @@ angular.module('gifchat.controllers')
       console.log('Invite Modal closed');
     };
 
-///////////////////////////////////
-    var resetCards = angular.copy($scope.cards);
-    $scope.cards = [];
+
+// Possibly useful extra functions:
+
+    $scope.payOrInviteClicked = false;
 
     function payOrInviteClick () {
       $scope.payOrInviteClicked = true;
+      $scope.openInviteModal();
       console.log("payOrInviteClicked: " + $scope.payOrInviteClicked);
     }
+///////////////is super inefficient - I should use a more efficient search algorithms & data structure here
+    function filterCardsByFromLikes(cards, likes){
+      //loop every value in likes
+      console.log("cards: " , cards);
+      console.log("likes: " , likes);
 
-    function _addCards(quantity) {
-      for (var i = 0; i < Math.min($scope.cards.length, quantity); i++) {
-        $scope.cards.push($scope.cards[0]);
-       $scope.cards.splice(0, 1);
+      for(i = 0; i < likes.length; i++){
+        // second loop to compare the values
+        for ( person in cards) {
+          if (cards[person].uid == likes[i]){
+            console.log('found a user who should be removed', cards[person]);
+            delete cards[person];
+          }
+        }
+      }
+      return cards;
+    }
+
+    function jsonIndexesToArray (obj) {
+      var result = [];
+      for(var i in obj){
+        result.push(i);
+      }
+      return result;
+    }
+
+    function removeByIndex(arr, index) {
+      arr.splice(index, 1);
+      return arr;
+    }
+
+    function removePerson(obj, val) {
+      for( person in obj ){
+        console.log('person: ', person);
+        console.log('checking if this person is the user: ', obj[person]);
+        if (obj[person].uid == val.uid) {
+          console.log('Found the user: ', obj[person]);
+          delete obj[person];
+          return obj;
+          break;
+        }
       }
     }
-    
-    $scope.cardDestroyed = function(index) {
-      console.log($scope.cards, 'card destroyed:', $scope.cards[index], index);
-      $scope.cards.splice(index, 1);
-      _addCards(1);
-      $scope.isMoveLeft = false;
-      $scope.isMoveRight = false;
-    };
-    $scope.cardSwiped = function(index) {
-      $scope.cards.push($scope.cards[Math.floor(Math.random(1)*8)]);
-    };
-
-    // For reasons, the$scope.profileSwipedRight and$scope.profileSwipedLeft events don’t get called always
-    // https://devdactic.com/optimize-tinder-cards/
-
-    $scope.cardSwipedLeft = function() {
-      console.log('$scope.cards inside swipe left', $scope.cards);
-      $scope.otherId = $scope.cards[0].uid;
-      console.log('current card object: ', $scope.cards[0]);
-      Dislike.addDislike(currentUid, $scope.otherId);
-
-      event.stopPropagation();
-    };
-
-    $scope.cardSwipedRight = function() {
-      console.log('$scope.cards inside swipe right', $scope.cards);
-      $scope.otherId = $scope.cards[0].uid;
-      console.log('current card object: ', $scope.cards[0]);
-      Like.addLike(currentUid, $scope.otherId);
-      Match.checkMatch(currentUid, $scope.otherId);
+});
 
 
-      event.stopPropagation();
-
-      // Open Match popup
-    };
-
-    $scope.cardPartialSwipe = function(amt) {
-      $scope.isMoveLeft = amt < -0.15;
-      $scope.isMoveRight = amt > 0.15;  
-    };
-
-    $scope.reset = function() {
-     $scope.cards = angular.copy(resetCards);
-      _addCards(2);
-    };
-//////////////////////////////////////////
-    // Match popup
-
-    $ionicModal.fromTemplateUrl('templates/modals/match.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.matchModal = modal;
-      console.log('Match Modal initialized');
-    });
-
-    $scope.openMatchModal = function(isFromCard) {
-      $scope.matchModal.show();
-      console.log("Match Modal shown");
-    };
-    $scope.closeMatchModal = function() {
-      $scope.matchModal.hide();
-      console.log("Match Modal closed");
-    };
-//////////////////////////////////////////
-    // Profile Details Modal
-
-    $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.profileModal = modal;
-    });
-
-    $scope.openProfileModal = function(isFromCard) {
-      $scope.isFromCard = isFromCard;
-      $scope.profileModal.show();
-    };
-    $scope.closeProfileModal = function() {
-      $scope.profileModal.hide();
-    };
-
-    $scope.interests = 'We will compare your Facebook interests  with those  of your matches to display  any  common connections'.split('  ');
 
 
-    // Onload
-    _addCards(2);// 2 is the best choice for the performance
-  });  
-
-/*
-    // GifChat$scope.cards
-    var$scope.cards = [
-      {
-        name: 'Max',
-        age: 25,
-        location: "San Francisco",
-        stars: 4,
-        uid: 1,
-        image: "video/card1.gif"
-      },
-      {
-        name: 'Beatrice',
-        age: 40,
-        location: "San Francisco",
-        stars: 4.5,
-        uid: 2,
-        image: "video/card2.gif" 
-      },
-      {
-        name: 'Maria',
-        age: 28,
-        location: "San Francisco",
-        stars: 5,
-        uid: 6,
-        image: "video/card3.gif" 
-      },
-      {
-        name: 'Betsy',
-        age: 31,
-        location: "San Francisco",
-        stars: 3.5,
-        uid: 7,
-        image: "video/card4.gif" 
-      },
-      {
-        name: 'Michelle',
-        age: 22,
-        location: "San Francisco",
-        stars: 4,
-        uid: 8,
-        image: "video/card5.gif" 
-      },
-      {
-        name: 'Penelope',
-        age: 23,
-        location: "San Francisco",
-        stars: 5,
-        uid: 9,
-        image: "video/giphy2.gif" 
-      },
-      {
-        name: 'Penelope',
-        age: 19,
-        location: "San Francisco",
-        stars: 4,
-        uid: 10,
-        image: "video/giphy3.gif" 
-      },
-      {
-        name: 'Patty',
-        age: 19,
-        location: "San Francisco",
-        stars: 4,
-        uid: 11,
-        image: "video/giphy4.gif" 
-      }
-    ];
-    */
