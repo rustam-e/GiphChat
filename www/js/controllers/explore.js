@@ -58,11 +58,20 @@ angular.module('gifchat.controllers')
 
         console.log('$scope.cards ', $scope.cards);
 
-        Like.allLikesByUser(currentUid).then(function(likesList) {
+        var likesListData = Like.allLikesByUser(currentUid);
+
+        likesListData.once('value').then(function(snapshot) {
+          likesList = snapshot.val();
+          console.log('likes list snapshot val', likesList);
           $scope.cards = _.filter($scope.cards, function(obj) {
             return _.isEmpty(_.where(likesList, {uid: obj.uid}));
           });
           console.log('$scope.cards inside alllikes', $scope.cards);
+          // remove common elements from both object and the array
+          filterCardsByFromLikes($scope.cards, likesList);
+          // test if it worked
+          console.log('array of objects after removing people you have liked already ', $scope.cards);
+
         });
 
         if ($scope.cards.length > 0) {
@@ -70,6 +79,35 @@ angular.module('gifchat.controllers')
           $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
         }        
       });
+    }
+
+    function filterCardsByFromLikes(cards, likes){
+      //loop every value in likes
+      console.log("cards: " , cards);
+      console.log("likes: " , likes);
+
+      for (var like in likes){
+        console.log('Objects which user has already liked: ', like);
+        // second loop to compare the values
+        for (var i = 0;  i < cards.length; i++) {
+          if (like === cards[i].uid){
+            removeByIndex($scope.cards, cards[i]);
+          }
+        }
+      }
+    }
+
+    function removeByIndex(arr, index) {
+      arr.splice(index, 1);
+    }
+
+    function removeByValue(arr, val) {
+      for(var i=0; i<arr.length; i++) {
+        if(arr[i] == val) {
+          arr.splice(i, 1);
+          break;
+        }
+      }
     }
 
     $scope.$on('$ionicView.enter', function(e) {
