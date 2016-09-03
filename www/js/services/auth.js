@@ -174,7 +174,7 @@ angular.module('gifchat.services')
     },
 
     getPicture: function(id) {
-      return 'http://graph.facebook.com/'+id+'/picture?type=large';
+      return 'http://graph.facebook.com/'+id+'/picture?width=9999&height=9999';
     },
 
     getPictureId: function(access_token) {

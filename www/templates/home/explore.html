@@ -18,30 +18,20 @@
 
   <ion-content vertical layout scroll="false">
     <div class="card-container text-center" flex relative vertical layout>
-      <div ng-show="home.profiles.length == 0" vertical layout center flex>
+      <div ng-show="cards.length == 0" vertical layout center flex>
         <div flex horizontal layout center>
           <div class="load">
-            <img src="video/giphy-me.gif" alt="" class="thumb-lg rounded b b-5x b-light box-shadow">
+            <img src="{{user.profilePicture}}" alt="" class="thumb-lg rounded b b-5x b-light box-shadow">
           </div>
         </div>
         <div class="text-muted text-center l-h">
-          <h5>Please Wait for 4 hours before you can explore more people</h5>
-          <br>
-          <button class="button button-block button-positive" ng-click="payModal()">I don't want to wait</button>
-          <div ng-show="payOrInviteClicked">
-            <button class="button button-stable" ng-click="item = questions[questions.indexOf(item) + 1]" >
-               Pay
-            </button>
-            <h5>OR</h5>
-            <button class="button button-stable" ng-click="openGiftEnergyModal(true)" >
-              Invite Friends
-            </button>
-          </div>
+          <h5>There are no more people nearby, please come later.</h5>
+          <br><!--
+          <button class="button button-positive" ng-click="openInviteModal(true)">I don't want to wait</button>-->
         </div>
       </div>
-
       <td-cards fit>
-        <td-card ng-repeat="card in home.profiles" 
+        <td-card ng-repeat="card in cards" 
           on-destroy="cardDestroyed($index)" 
           on-swipe-left="cardSwipedLeft()" 
           on-swipe-right="cardSwipedRight()" 
@@ -50,24 +40,19 @@
           on-transition-right="transitionRight(card)"
           on-transition-out="transitionOut(card)"
           class="card-{{$index}}"
-          ng-style="{'z-index': home.profiles.length - $index + 1}"><!-- Work around for The z-index missing issue-->
+          ng-style="{'z-index': cards.length - $index + 1}"><!-- Work around for The z-index missing issue-->
           <div class="card-GifChat bg-white" vertical layout ng-click="openProfileModal(true)">
           <!--  <div flex class="div-img" ng-style="{'background-image': 'url(\'' + card.image + '\')'}"></div>   -->
-
-            <div class="video-container"style="height: 420px; max-width: 100%">
-             <img ng-src="{{card.image}}" class ="div-img" style="max-width:100%; max-height: 420px"></img>
-            </div>
-
-
-
+            <div flex class="div-img" ng-style="{'background-image': 'url({{card.profilePicture}})'}"></div>  
             <div class="row caption text-lg l-h">
               <div class="col-80 text-left">
-                <div class="text-xl">{{card.name}}, {{card.age}}</div>
-                <div class="text-muted">{{card.location}}</div>
+                <div class="text-xl">{{card.firstName}}</div>
+                <div class="text-muted">{{card.location.name}}</div>
               </div>
               <div class="col-20 text-muted text-xl text-right"> 
-                <i class="icon ion-android-star-outline"></i>
-                {{card.stars}}
+                {{card.age}}
+                <!--<i class="icon ion-android-star-outline"></i>
+                {{card.stars}}-->
               </div>
             </div>
             <div class="no-text">
@@ -82,25 +67,25 @@
     </div>
 
     <div class="card-actions padder-v" horizontal layout around-justified center>
-      <div class="card-action">
+      <div class="card-action"><!--
         <button class="button button-light rounded" ng-click="reset()">
           <i class="icon ion-refresh energized text-2x rounded"></i>
-        </button>
+        </button>-->
       </div>
       <div class="card-action bigger-button" ng-click="cardSwipedLeft()">
         <button class="button button-large button-light rounded" ng-class="{zoom: isMoveLeft}" ng-click="cardDestroyed(0)">
-          <i class="icon ion-close-round text-2x rounded" ng-class="home.profiles.length == 0 ? 'stable' : 'assertive'"></i>
+          <i class="icon ion-close-round text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'assertive'"></i>
         </button>
       </div>
       <div class="card-action bigger-button" ng-click="cardSwipedRight()">
         <button class="button button-large button-light rounded" ng-class="{zoom: isMoveRight}" ng-click="cardDestroyed(0)">
-          <i class="icon ion-heart text-2x rounded" ng-class="home.profiles.length == 0 ? 'stable' : 'balanced'"></i>
+          <i class="icon ion-heart text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'balanced'"></i>
         </button>
       </div>
       <div class="card-action">
-        <button class="button button-light rounded" ng-click="openGiftEnergyModal(true)">
-          <i class="icon ion-android-star text-2x rounded" ng-class="home.profiles.length == 0 ? 'stable' : 'calm'"></i>
-        </button>
+        <!--<button class="button button-light rounded" ng-click="openGiftEnergyModal(true)">
+          <i class="icon ion-android-star text-2x rounded" ng-class="cards.length == 0 ? 'stable' : 'calm'"></i>
+        </button>-->
       </div>
     </div>
   </ion-content>
