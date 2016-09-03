@@ -77,17 +77,17 @@
   </ion-content>
 
   <div class="card-actions padder-v on-profile bg-gd" horizontal layout around-justified center ng-if="isFromCard">
-    <div class="card-action no-padder">
+    <div class="card-action no-padder" ng-click="cardSwipedLeft()">
       <button class="button button-assertive rounded" ng-class="{zoom: isMoveLeft}" ng-click="cardDestroyed(0)">
         <i class="icon ion-close-round text-2x rounded"></i>
       </button>
     </div>
     <div class="card-action no-padder">
-      <button class="button button-calm rounded">
+      <button class="button button-calm rounded" ng-click="openGiftEnergyModal(true)">
         <i class="icon ion-android-star text-2x rounded"></i>
       </button>
     </div>
-    <div class="card-action no-padder">
+    <div class="card-action no-padder" ng-click="cardSwipedRight()">
       <button class="button button-balanced rounded" ng-class="{zoom: isMoveRight}" ng-click="cardDestroyed(0)">
         <i class="icon ion-heart text-2x rounded"></i>
       </button>

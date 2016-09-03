@@ -14,6 +14,10 @@ angular.module('gifchat.controllers')
     var women = null;
     var home = this;
 
+    //console.log(user);
+
+    var payOrInviteClicked;
+    $scope.payOrInviteClicked = false;
 ///////////////////////////////////////////////////////////////////////////////////////
 
     function init() {
@@ -56,9 +60,7 @@ angular.module('gifchat.controllers')
 
         Like.allLikesByUser(currentUid).then(function(likesList) {
           home.profiles = _.filter(home.profiles, function(obj) {
-            answer = _.isEmpty(_.where(likesList, {uid: obj.uid}));
-            console.log('Like.allLikesByUser returns: ', answer);
-            return answer;
+            return _.isEmpty(_.where(likesList, {uid: obj.uid}));
           });
         });
 
@@ -73,40 +75,9 @@ angular.module('gifchat.controllers')
       init();
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////
 
-
-    //console.log(user);
-
-    var payOrInviteClicked;
-    $scope.payOrInviteClicked = false;
-
-
+///////////////////////////////////
     // GiftEnergy Modal
     $ionicModal.fromTemplateUrl('templates/modals/gift_energy.html', {
       scope: $scope,
@@ -126,7 +97,7 @@ angular.module('gifchat.controllers')
       $scope.giftEnergyModal.hide();
       console.log('Gift Modal closed');
     };
-
+///////////////////////////////////
     // Invite Modal
     $ionicModal.fromTemplateUrl('templates/modals/invite.html', {
       scope: $scope,
@@ -146,6 +117,83 @@ angular.module('gifchat.controllers')
       $scope.inviteModal.hide();
       console.log('Invite Modal closed');
     };
+
+///////////////////////////////////
+    var resetCards = angular.copy(home.profiles);
+    home.profiles = [];
+
+    function payOrInviteClick () {
+      $scope.payOrInviteClicked = true;
+      console.log("payOrInviteClicked: " + $scope.payOrInviteClicked);
+    }
+
+    function _addCards(quantity) {
+      for (var i = 0; i < Math.min(home.profiles.length, quantity); i++) {
+        home.profiles.push(home.profiles[0]);
+       home.profiles.splice(0, 1);
+      }
+    }
+    
+    $scope.cardDestroyed = function(index) {
+      console.log(home.profiles, 'card destroyed:', home.profiles[index], index);
+      home.profiles.splice(index, 1);
+      _addCards(1);
+      $scope.isMoveLeft = false;
+      $scope.isMoveRight = false;
+    };
+
+    $scope.cardPartialSwipe = function(amt) {
+      $scope.isMoveLeft = amt < -0.15;
+      $scope.isMoveRight = amt > 0.15;  
+    };
+
+    $scope.reset = function() {
+     home.profiles = angular.copy(resetCards);
+      _addCards(2);
+    };
+//////////////////////////////////////////
+    // Match popup
+
+    $ionicModal.fromTemplateUrl('templates/modals/match.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.matchModal = modal;
+      console.log('Match Modal initialized');
+    });
+
+    $scope.openMatchModal = function(isFromCard) {
+      $scope.matchModal.show();
+      console.log("Match Modal shown");
+    };
+    $scope.closeMatchModal = function() {
+      $scope.matchModal.hide();
+      console.log("Match Modal closed");
+    };
+//////////////////////////////////////////
+    // Profile Details Modal
+
+    $ionicModal.fromTemplateUrl('templates/modals/profile.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.profileModal = modal;
+    });
+
+    $scope.openProfileModal = function(isFromCard) {
+      $scope.isFromCard = isFromCard;
+      $scope.profileModal.show();
+    };
+    $scope.closeProfileModal = function() {
+      $scope.profileModal.hide();
+    };
+
+    $scope.interests = 'We will compare your Facebook interests  with those  of your matches to display  any  common connections'.split('  ');
+
+
+    // Onload
+    _addCards(2);// 2 is the best choice for the performance
+  });  
 
 /*
     // GifChathome.profiles
@@ -216,85 +264,3 @@ angular.module('gifchat.controllers')
       }
     ];
     */
-    var resetCards = angular.copy(home.profiles);
-    home.profiles = [];
-
-    function payOrInviteClick () {
-      $scope.payOrInviteClicked = true;
-      console.log("payOrInviteClicked: " + $scope.payOrInviteClicked);
-    }
-
-    function _addCards(quantity) {
-      for (var i = 0; i < Math.min(home.profiles.length, quantity); i++) {
-        home.profiles.push(home.profiles[0]);
-       home.profiles.splice(0, 1);
-      }
-    }
-    
-    $scope.cardDestroyed = function(index) {
-      console.log(home.profiles, 'card destroyed:', home.profiles[index], index);
-      home.profiles.splice(index, 1);
-      _addCards(1);
-      $scope.isMoveLeft = false;
-      $scope.isMoveRight = false;
-    };
-
-    home.profileswiped = function(index) {
-      home.profiles.push(home.profiles[Math.floor(Math.random(1)*8)]);
-    };
-
-    // For reasons, thehome.profileswipedRight andhome.profileswipedLeft events don’t get called always
-    // https://devdactic.com/optimize-tinder-cards/
-
-    home.profileswipedLeft = function() {
-      $scope.otherId = home.profiles[0].uid;
-      console.log('current card object: ', home.profiles[0]);
-      Dislike.addDislike(Auth.currentUser.uid, $scope.otherId);
-
-      event.stopPropagation();
-    };
-
-    home.profileswipedRight = function() {
-      $scope.otherId = home.profiles[0].uid;
-      console.log('current card object: ', home.profiles[0]);
-      Like.addLike(currentUid, $scope.otherId);
-      Match.checkMatch(currentUid, $scope.otherId);
-
-
-      event.stopPropagation();
-
-      // Open Match popup
-      if (home.profiles.length % 3 == 1) $scope.openMatchModal();
-    };
-
-    $scope.cardPartialSwipe = function(amt) {
-      $scope.isMoveLeft = amt < -0.15;
-      $scope.isMoveRight = amt > 0.15;  
-    };
-
-    $scope.reset = function() {
-     home.profiles = angular.copy(resetCards);
-      _addCards(2);
-    };
-
-    // Match popup
-    $ionicModal.fromTemplateUrl('templates/modals/match.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.matchModal = modal;
-      console.log('Match Modal initialized');
-    });
-
-    $scope.openMatchModal = function(isFromCard) {
-      $scope.matchModal.show();
-      console.log("Match Modal shown");
-    };
-    $scope.closeMatchModal = function() {
-      $scope.matchModal.hide();
-      console.log("Match Modal closed");
-    };
-
-    // Onload
-    _addCards(2);// 2 is the best choice for the performance
-  });  

@@ -204,7 +204,7 @@ angular.module('gifchat.services')
 
     getProfilesByAge: function(age) {
       //var deferred = $q.defer();
-      return profilesRef.orderByChild('age').startAt(18).endAt(age);
+      return profilesRef.orderByChild('age').startAt(18).endAt(age).limitToLast(15);
       //starCountRef.on('value', function(snapshot) {
       //  updateStarCount(postElement, snapshot.val());
       //});
