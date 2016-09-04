@@ -7,6 +7,8 @@ angular.module('gifchat.controllers')
     console.log('currentUid: ', currentUid);
     //setting to the default value - needs to be dynamically updated with a setter method later
     var maxAge = 86;
+    $scope.currentIndex = null;
+    $scope.currentCardUid = null;
     // setting init variables
     //cards for the UI
     $scope.cards = {};
@@ -19,7 +21,9 @@ angular.module('gifchat.controllers')
           console.log('data after eliminating the user from the list: ', data);
           if ($scope.cards.length > 0) {
             $scope.currentIndex = $scope.cards.length - 1;
+            console.log('$scope.currentIndex - check if it has a length: ', $scope.currentIndex);
             $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
+            console.log('$scope.currentCardUid - check if the lookup works: ', $scope.currentIndex);
           }
           // getting likes data in parallel
           var likesListData = Like.allLikesByUser(currentUid);
@@ -45,39 +49,52 @@ angular.module('gifchat.controllers')
       init();
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////
+/* THIS LOGIC ASSUMES MY CARDS ARE IN AN ARRAY WHEN THEY ARE IN AN OBJECT
+    1) Translate the logic to use objects
+    2) connect the UI
+    3) the problem is tracking the card index in an object
+*/
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////            
     $scope.cardDestroyed = function(index) {
       console.log($scope.cards, 'card destroyed:', $scope.cards[index], index);
-      removePerson($scope.cards, $scope.cardsp[index]);
+      removePerson($scope.cards, $scope.cards[index]);
 //      $scope.cards.splice(index, 1);
     };
 
 
-    $scope.cardSwipedLeft = function(index) {
+    $scope.cardSwipedLeft = function(index, dislike_uid) {
       console.log('$scope.cards inside swipe left', $scope.cards);
       console.log('current card object: ', $scope.cards[index]);
-      Dislike.addDislike(currentUid, index);
+      Dislike.addDislike(currentUid, dislike_uid);
+      
       $scope.cardRemoved(index);
     };
 
-    $scope.cardSwipedRight = function(index) {
+    $scope.cardSwipedRight = function(index, like_uid) {
       console.log('$scope.cards inside swipe right', $scope.cards);
       console.log('current card object: ', $scope.cards[index]);
-      Like.addLike(currentUid, index);
-      Match.checkMatch(currentUid, index);
+      Like.addLike(currentUid, like_uid);
+      Match.checkMatch(currentUid, like_uid);
+      
       $scope.cardRemoved(index);
+      console.log('LIKE');
     };
 
     $scope.cardRemoved = function(index) {
-      removePerson($scope.cards, index);
+      removePerson($scope.cards, $scope.cards[index]);
+
+        $scope.currentIndex = $scope.cards.length - 1;
+/////// the problem with using an object is 
+/////// how do I track the index of the currentCard in order to use in a modal?
+/////// I have a local variable which is updated after every swiping action.
+/////// OR I update the value by looking up the index of the current card in the loop or at least the uid      
 
       if ($scope.cards.length > 0) {
         $scope.currentIndex = $scope.cards.length - 1;
         $scope.currentCardUid = $scope.cards[$scope.currentIndex].uid;
       }
     };
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////            
 
 //// Modals related initialization and functions
 

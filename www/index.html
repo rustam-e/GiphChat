@@ -6,6 +6,10 @@
     <title></title>
 
 
+    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+
+    
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="lib/ionic-ion-GifChat-cards/ionic.tdcards.css"> -->
@@ -17,6 +21,8 @@
     <script src="lib/ionic-ion-tinder-cards/ionic.tdcards.js"></script>
     <script src="lib/angular-elastic/elastic.js"></script>
     <script src="js/giphy.js"></script>
+
+    <!-- ngCordova -->
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -25,12 +31,15 @@
     <!-- firebase and angular fire -->
     <script src="https://cdn.firebase.com/libs/angularfire/2.0.2/angularfire.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <!-- GeoFire -->
+    <script src="https://cdn.firebase.com/libs/geofire/4.1.1/geofire.min.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers/controllers.js"></script>
     <script src="js/services/services.js"></script>
 
+    <script src="js/controllers/geo.js"></script>
     <script src="js/controllers/app.js"></script>
     <script src="js/controllers/explore.js"></script>
     <script src="js/controllers/matches.js"></script>
@@ -39,6 +48,7 @@
     <script src="js/controllers/welcome.js"></script>
 
     <script src="js/services/auth.js"></script>
+    <script src="js/services/geo.js"></script>
     <script src="js/services/like.js"></script>
     <script src="js/services/dislike.js"></script>
     <script src="js/services/giphy.js"></script>

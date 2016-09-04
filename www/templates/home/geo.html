@@ -1,0 +1,27 @@
+<ion-view title="GifChat">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" nav-direction="back" ui-sref="home.explore">
+      <i class="icon ion-fireball"></i>
+    </button>
+  </ion-nav-buttons>
+
+   <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+   </style>
+  <div id="map"></div>
+
+  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+
+ </ion-view>

@@ -70,6 +70,12 @@ angular.module('gifchat', [
       controller: 'SettingsCtrl'
     })
 
+    .state('home.geo', {
+      url: '/geo',
+      templateUrl: 'templates/home/geo.html',
+      controller: 'GeoCtrl'
+    })
+
     .state('home.matches', {
       url: '/matches',
       templateUrl: 'templates/home/matches.html',
